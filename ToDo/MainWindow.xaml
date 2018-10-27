@@ -25,7 +25,10 @@
                   SelectedItem="{Binding Path=SelectedTaskList.SelectedTask}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Path=TaskTitle}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox IsChecked="{ Binding Path=IsDone }" Margin="3"/>
+                        <TextBlock Text="{ Binding Path=TaskTitle }"/>
+                    </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
