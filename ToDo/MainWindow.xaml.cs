@@ -13,8 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ToDo.Models;
-using ToDo.ModelsView;
 using System.Collections;
+using ToDo.ViewModels;
+
 
 namespace ToDo
 {
@@ -29,17 +30,8 @@ namespace ToDo
             InitializeComponent();
             db = new DB_API();
             db.start();
-        }
 
-        private void MainButton_Click(object sender, RoutedEventArgs e)
-        {
-            string s = "SELECT * FROM task";
-            
-            ArrayList answer;
-            answer = db.select(s);
-
-            for (int i = 0; i < answer.Count; i++)
-                TextLabel.Content += answer[i].ToString() + "\n";
+            DataContext = new ApplicationViewModel();
         }
     }
 }

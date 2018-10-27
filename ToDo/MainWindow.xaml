@@ -20,14 +20,34 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="4*" />
         </Grid.ColumnDefinitions>
-        <ListBox Grid.Column="0" ItemsSource="{Binding Tasks}"
-                 SelectedItem="{Binding CurrentPhone}">
+        <ListBox Grid.Column="0" ItemsSource="{Binding TaskLists}"
+                 SelectedItem="{Binding SelectedTaskList}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
+                    <TextBlock Text="{Binding Path=TaskListTitle}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button x:Name="MainButton" Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="331.6,173,0,0" VerticalAlignment="Top" Width="75" Click="MainButton_Click"/>
         <Label x:Name="TextLabel" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="9.6,10,0,0" VerticalAlignment="Top" Height="400" Width="252"/>
+
+        <StackPanel Grid.Column="0"
+        
+    
+    <ListView Grid.Column="0" ItemsSource="{Binding TaskLists}" SelectedItem="{Binding SelectedTaskList}">
+        <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Path=TaskListTitle}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <ListView Grid.Column="1" ItemsSource="{Binding Path=SelectedTaskList.Tasks}" 
+                  SelectedItem="{Binding Path=SelectedTaskList.SelectedTask}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Path=TaskTitle}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Window>
