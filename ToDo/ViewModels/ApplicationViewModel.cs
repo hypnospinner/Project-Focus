@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 using ToDo.Models;
+using System.Windows.Input;
 
 namespace ToDo.ViewModels
 {
@@ -23,6 +24,7 @@ namespace ToDo.ViewModels
                 //new TaskList("Tasklist 2"),
                 //new TaskList("Tasklist 3"),
             };
+            // чтение из базы
         }
 
         public TaskList SelectedTaskList

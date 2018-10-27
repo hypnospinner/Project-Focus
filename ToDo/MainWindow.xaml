@@ -6,19 +6,34 @@
         xmlns:local="clr-namespace:ToDo"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="4*" />
         </Grid.ColumnDefinitions>
+        <ListBox Grid.Column="0" ItemsSource="{Binding TaskLists}"
+                 SelectedItem="{Binding SelectedTaskList}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Path=TaskListTitle}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="0.2*" />
-        </Grid.RowDefinitions>
+        <StackPanel Grid.Column="0"/>
+
 
         <ListView Grid.Column="0" ItemsSource="{Binding TaskLists}" SelectedItem="{Binding SelectedTaskList}">
-            <ListView.ItemTemplate>
+        <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Path=TaskListTitle}"/>
                 </DataTemplate>
