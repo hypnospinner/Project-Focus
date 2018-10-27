@@ -11,6 +11,10 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="4*" />
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
         <ListBox Grid.Column="0" ItemsSource="{Binding TaskLists}"
                  SelectedItem="{Binding SelectedTaskList}">
             <ListBox.ItemTemplate>
