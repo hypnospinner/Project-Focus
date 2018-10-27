@@ -6,6 +6,12 @@ namespace ToDo.Models
     {
         private string _taskTitle;
         private bool _isDone;
+        private string _taskNote;
+
+        public Task(string title)
+        {
+            TaskTitle = title;
+        }
 
         public string TaskTitle
         {
@@ -24,6 +30,16 @@ namespace ToDo.Models
             {
                 _isDone = value;
                 OnPropertyChanged("IsDone");
+            }
+        }
+
+        public string TaskNote
+        {
+            get => _taskNote;
+            set
+            {
+                _taskNote = value;
+                OnPropertyChanged("TaskNote");
             }
         }
 
