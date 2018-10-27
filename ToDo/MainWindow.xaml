@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ToDo"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    
+
     <Grid>
 
         <Grid.ColumnDefinitions>
@@ -21,5 +21,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <Button x:Name="MainButton" Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="331.6,173,0,0" VerticalAlignment="Top" Width="75" Click="MainButton_Click"/>
+        <Label x:Name="TextLabel" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="9.6,10,0,0" VerticalAlignment="Top" Height="400" Width="252"/>
     </Grid>
 </Window>

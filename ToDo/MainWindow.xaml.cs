@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ToDo.Models;
 using ToDo.ModelsView;
+using System.Collections;
 
 namespace ToDo
 {
@@ -22,9 +23,23 @@ namespace ToDo
     /// </summary>
     public partial class MainWindow : Window
     {
+        DB_API db;
         public MainWindow()
         {
             InitializeComponent();
+            db = new DB_API();
+            db.start();
+        }
+
+        private void MainButton_Click(object sender, RoutedEventArgs e)
+        {
+            string s = "SELECT * FROM task";
+            
+            ArrayList answer;
+            answer = db.select(s);
+
+            for (int i = 0; i < answer.Count; i++)
+                TextLabel.Content += answer[i].ToString() + "\n";
         }
     }
 }
