@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
+using System;
 
 namespace ToDo.Models
 {
@@ -16,9 +17,9 @@ namespace ToDo.Models
             TaskListTitle = title;
             Tasks = new ObservableCollection<Task>
             {
-                new Task() {TaskTitle = "task 1 title of " + _taskListTitle},
-                new Task() {TaskTitle = "task 1 title of " + _taskListTitle},
-                new Task() {TaskTitle = "task 1 title of " + _taskListTitle}
+                new Task() {TaskTitle = "task 1 title of " + _taskListTitle, IsDone = true },
+                new Task() {TaskTitle = "task 1 title of " + _taskListTitle, IsDone = false },
+                new Task() {TaskTitle = "task 1 title of " + _taskListTitle, IsDone = true }
             };
         }
 
@@ -29,6 +30,7 @@ namespace ToDo.Models
             {
                 _taskListTitle = value;
                 OnPropertyChanged("TaskListTitle");
+                Console.WriteLine(value);
             }
         }
 

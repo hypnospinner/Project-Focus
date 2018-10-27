@@ -8,6 +8,12 @@ namespace ToDo.ViewModels
     public class ApplicationViewModel : INotifyPropertyChanged
     {
         private TaskList selectedTaskList;
+        private RelayCommand _addTaskList;
+        private RelayCommand _addTask;
+        private string _newTaskListName;
+        private string _newTaskName;
+        public ObservableCollection<TaskList> TaskLists { get; set; }
+
 
         public ApplicationViewModel()
         {
@@ -19,8 +25,6 @@ namespace ToDo.ViewModels
             };
         }
 
-        public ObservableCollection<TaskList> TaskLists { get; set; }
-
         public TaskList SelectedTaskList
         {
             get { return selectedTaskList; }
@@ -31,6 +35,54 @@ namespace ToDo.ViewModels
             }
         }
 
+<<<<<<< HEAD
+=======
+        public string NewTaskListName
+        {
+            get => _newTaskListName;
+            set
+            {
+                _newTaskListName = value;
+                OnPropertyChanged("NewTaskListName");
+            }
+        }
+
+        public RelayCommand AddTaskList
+        {
+            get
+            {
+                return _addTaskList ??
+                    (_addTaskList = new RelayCommand(obj =>
+                   {
+                       TaskList tasklist = new TaskList(NewTaskListName);
+                       TaskLists.Add(tasklist);
+                       SelectedTaskList = tasklist;
+                   }));
+            }
+        }
+
+        public RelayCommand AddTask
+        {
+            get
+            {
+                return _addTask ?? (_addTask = new RelayCommand(obj =>
+                {
+                    Task task = new Task(NewTaskName);
+                })
+            }
+        }
+
+        public string NewTaskName
+        {
+            get => _newTaskName;
+            set
+            {
+                _newTaskName = value;
+                OnPropertyChanged("NewTaskName");
+            }
+        }
+
+>>>>>>> 8da37b29789a7045565cc24cde3b319a2bad47a5
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
