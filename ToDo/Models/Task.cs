@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace ToDo.Models
 {
     class Task : INotifyPropertyChanged
     {
+        // properties
         private string _taskDescription;        // name of task        
         private string _taskNote;               // some notes for task
         private bool _isDone;                   // weather wask is done or note
+
+        // fields
         public string TaskDescription
         {
             get => _taskDescription;
@@ -41,6 +39,7 @@ namespace ToDo.Models
             }
         }
 
+        // methods
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChange([CallerMemberName]string propertyName = "")
         {
