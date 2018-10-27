@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ToDo.Models
+namespace ToDo.ModelsView
 {
-    class SubTask
+    class DB_Query
     {
+        public void select(string what, string from, string where)
+        {
 
+        }
     }
 }
