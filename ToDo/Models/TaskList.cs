@@ -46,6 +46,8 @@ namespace ToDo.Models
             get; private set;
         }
 
+        public int Id { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {

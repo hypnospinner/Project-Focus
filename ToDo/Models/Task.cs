@@ -21,6 +21,8 @@ namespace ToDo.Models
             SubTasks = new ObservableCollection<SubTask>();
         }
 
+        public int Id { get; set; }
+
         public string TaskTitle
         {
             get => _taskTitle;
