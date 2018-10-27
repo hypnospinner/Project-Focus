@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ToDo.ModelsView;
 
-namespace ToDo.Models
+namespace ToDo.ModelsView
 {
-    class ApplicationModel
+    class DB_Query
     {
-        
+        public void select(string what, string from, string where)
+        {
 
-        
+        }
     }
 }
