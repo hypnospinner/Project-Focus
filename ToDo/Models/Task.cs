@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel;
 
+
 namespace ToDo.Models
 {
     public class Task : INotifyPropertyChanged
     {
+        private RelayCommand _deletaTask;
         private string _taskTitle;
         private bool _isDone;
         private string _taskNote;
@@ -41,6 +43,20 @@ namespace ToDo.Models
                 _taskNote = value;
                 OnPropertyChanged("TaskNote");
             }
+        }
+
+        public RelayCommand DeletaTask
+        {
+            get
+            {
+                return _deletaTask ?? (_deletaTask = new RelayCommand(
+                    obj =>
+                    {
+
+                    }
+                    ));
+            }
+            
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
