@@ -8,6 +8,11 @@ namespace ToDo.Models
         private bool _isDone;
         private string _taskNote;
 
+        public Task(string title)
+        {
+            TaskTitle = title;
+        }
+
         public string TaskTitle
         {
             get => _taskTitle;

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
+using System;
 
 namespace ToDo.Models
 {
@@ -29,6 +30,7 @@ namespace ToDo.Models
             {
                 _taskListTitle = value;
                 OnPropertyChanged("TaskListTitle");
+                Console.WriteLine(value);
             }
         }
 

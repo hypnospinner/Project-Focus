@@ -10,9 +10,13 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="0.2*" />
+        </Grid.RowDefinitions>
+
         <ListView Grid.Column="0" ItemsSource="{Binding TaskLists}" SelectedItem="{Binding SelectedTaskList}">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -21,7 +25,12 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <ListView Grid.Column="1" ItemsSource="{Binding Path=SelectedTaskList.Tasks}" 
+        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical">
+            <TextBox Text="{Binding NewTaskListName, UpdateSourceTrigger=PropertyChanged}" />
+            <Button Command="{Binding AddTaskList}">+</Button>
+        </StackPanel>
+
+            <ListView Grid.Column="1" ItemsSource="{Binding Path=SelectedTaskList.Tasks}" 
                   SelectedItem="{Binding Path=SelectedTaskList.SelectedTask}">
             <ListView.ItemTemplate>
                 <DataTemplate>
