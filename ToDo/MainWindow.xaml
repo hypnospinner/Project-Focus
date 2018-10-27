@@ -5,47 +5,98 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToDo"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="ToDosha" Height="450" Width="800">
+   <Window.Resources>
+     <Style x:Key="BaseStyle" TargetType="Control">
+       <Setter Property="Margin" Value="15"/>
+       <Setter Property="BorderBrush" Value="Black"/>
+       <Setter Property="BorderThickness" Value="1"/>
+       <Setter Property="HorizontalAlignment" Value="Center"/>
+     </Style>
+
+     <!-- BUTTON -->
+     <Style x:Key="AddButtonStyle" TargetType="Button" 
+            BasedOn="{StaticResource BaseStyle}">
+       <Setter Property="Width" Value="80"></Setter>
+     </Style>
+
+     <!-- TEXTBOX -->
+     <Style x:Key="TextBoxStyle" TargetType="TextBox"
+            BasedOn="{StaticResource BaseStyle}">
+       <Setter Property="MinHeight" Value="50"/>
+       <Setter Property="HorizontalAlignment" Value="Stretch"/>
+     </Style>
+
+     <!-- TASKLIST / ITEM -->
+      <Style x:Key="TaskListStyle" TargetType="TextBlock">
+          <Setter Property="Foreground" Value="Black" />
+          <Setter Property="Padding" Value="8,4"/>
+          <Setter Property="Margin" Value="10" />
+          <!--<Setter Property="BorderThickness" Value="2"/>-->
+      </Style>
+
+     <!-- TODO / ITEM -->
+      <Style x:Key="ToDoItemStyle" TargetType="TextBlock">
+          <!--<Setter Property="FontFamily" Value="Comic Sans MS" />-->
+          <Setter Property="Foreground" Value="Black" />
+          <Setter Property="Margin" Value="5" />
+      </Style>
+     
+    </Window.Resources>
+    
     <Grid>
-        
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="4*" />
-        </Grid.ColumnDefinitions>
-        
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="4*" />
+      </Grid.ColumnDefinitions>
 
-        <ListBox Grid.Column="0" ItemsSource="{Binding TaskLists}"
-                 SelectedItem="{Binding SelectedTaskList}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Path=TaskListTitle}"/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="auto" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+      
+      <!-- TASKLISTS -->
+      <!--<ListBox Grid.Column="0" ItemsSource="{Binding TaskLists}"
+                SelectedItem="{Binding SelectedTaskList}">
+          <ListBox.ItemTemplate>
+              <DataTemplate>
+                  <TextBlock Text="{Binding Path=TaskListTitle}"/>
+              </DataTemplate>
+          </ListBox.ItemTemplate>
+      </ListBox>-->
 
-        <StackPanel Grid.Column="0"/>
-
-        <ListView Grid.Column="0" ItemsSource="{Binding TaskLists}" SelectedItem="{Binding SelectedTaskList}">
+      <ListView Grid.Row="0" Grid.Column="0" 
+                ItemsSource="{Binding TaskLists}" 
+                SelectedItem="{Binding SelectedTaskList}">
         <ListView.ItemTemplate>
+            <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Path=TaskListTitle}" Style="{StaticResource TaskListStyle}"/>
+                        <Button Command="{Binding DeleteTaskList}">-</Button>
+                    </StackPanel>   
+                </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+
+      <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical">
+        <TextBox Text="{Binding NewTaskListName, UpdateSourceTrigger=PropertyChanged}" 
+                 Style="{StaticResource TextBoxStyle}"/>
+        <Button Style="{StaticResource AddButtonStyle}" Command="{Binding AddTaskList}" Content="+"/>
+      </StackPanel>
+
+      <!--<ListView Grid.Column="1" ItemsSource="{Binding Path=SelectedTaskList.Tasks}" 
+            SelectedItem="{Binding Path=SelectedTaskList.SelectedTask}">
+            <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Path=TaskListTitle}"/>
-                        <Button Command="{Binding DeleteTaskList}" HorizontalAlignment="Right" Margin="3">-</Button>
+                        <CheckBox IsChecked="{ Binding Path=IsDone }" Margin="3"/>
+                        <TextBlock Text="{ Binding Path=TaskTitle }"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
-        </ListView>
+        </ListView>-->
 
-        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical">
-            <TextBox Text="{Binding NewTaskListName, UpdateSourceTrigger=PropertyChanged}" />
-            <Button Command="{Binding AddTaskList}">+</Button>
-        </StackPanel>
-
-            <ListView Grid.Column="1" ItemsSource="{Binding Path=SelectedTaskList.Tasks}" 
+        <ListView Grid.Column="1" ItemsSource="{Binding Path=SelectedTaskList.Tasks}" 
                   SelectedItem="{Binding Path=SelectedTaskList.SelectedTask}">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -75,8 +126,10 @@
         </ListView>
 
         <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical">
-            <TextBox Text="{Binding NewTaskName, UpdateSourceTrigger=PropertyChanged}" />
-            <Button Command="{Binding AddTask}">+</Button>
+            <TextBox Text="{Binding NewTaskName, UpdateSourceTrigger=PropertyChanged}" 
+                     Style="{StaticResource TextBoxStyle}"/>
+            <Button Command="{Binding AddTask}" 
+                    Style="{StaticResource AddButtonStyle}">+</Button>
         </StackPanel>
     </Grid>
 </Window>
