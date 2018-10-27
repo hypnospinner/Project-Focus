@@ -19,9 +19,9 @@ namespace ToDo.ViewModels
         {
             TaskLists = new ObservableCollection<TaskList>
             {
-                new TaskList("Tasklist 1"),
-                new TaskList("Tasklist 2"),
-                new TaskList("Tasklist 3"),
+                //new TaskList("Tasklist 1"),
+                //new TaskList("Tasklist 2"),
+                //new TaskList("Tasklist 3"),
             };
         }
 
@@ -52,9 +52,10 @@ namespace ToDo.ViewModels
                 return _addTaskList ??
                     (_addTaskList = new RelayCommand(obj =>
                    {
-                       TaskList tasklist = new TaskList(NewTaskListName);
-                       TaskLists.Add(tasklist);
-                       SelectedTaskList = tasklist;
+                       TaskList taskList = new TaskList(NewTaskListName);
+                       TaskLists.Add(taskList);
+                       SelectedTaskList = taskList;
+                       NewTaskListName = "";
                    }));
             }
         }
@@ -66,7 +67,9 @@ namespace ToDo.ViewModels
                 return _addTask ?? (_addTask = new RelayCommand(obj =>
                 {
                     Task task = new Task(NewTaskName);
-                })
+                    SelectedTaskList.Tasks.Add(task);
+                    NewTaskName = "";
+                }));
             }
         }
 
