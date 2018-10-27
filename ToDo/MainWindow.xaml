@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Button x:Name="MakeNoteToDB_Button" Content="New Note" HorizontalAlignment="Left" Margin="284,205,0,0" VerticalAlignment="Top" Width="75" Click="MakeNoteToDB_Button_Click"/>
+
     </Grid>
 </Window>
