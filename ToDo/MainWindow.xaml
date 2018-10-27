@@ -6,8 +6,28 @@
         xmlns:local="clr-namespace:ToDo"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Button x:Name="MakeNoteToDB_Button" Content="New Note" HorizontalAlignment="Left" Margin="284,205,0,0" VerticalAlignment="Top" Width="75" Click="MakeNoteToDB_Button_Click"/>
 
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="4*" />
+        </Grid.ColumnDefinitions>
+        <ListBox Grid.Column="0" ItemsSource="{Binding Tasks}"
+                 SelectedItem="{Binding CurrentPhone}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button x:Name="MainButton" Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="331.6,173,0,0" VerticalAlignment="Top" Width="75" Click="MainButton_Click"/>
+        <Label x:Name="TextLabel" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="9.6,10,0,0" VerticalAlignment="Top" Height="400" Width="252"/>
     </Grid>
 </Window>

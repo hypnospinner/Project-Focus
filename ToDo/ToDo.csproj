@@ -84,10 +84,8 @@
   <ItemGroup>
     <Compile Include="ModelsView\DB_API.cs" />
     <Compile Include="ModelsView\DB_Query.cs" />
-    <Compile Include="Models\ApplicationModel.cs" />
-    <Compile Include="Models\SubTask.cs" />
-    <Compile Include="Models\Task.cs" />
-    <Compile Include="Models\TaskList.cs" />
+    <Compile Include="ModelsView\ApplicationViewModel.cs" />
+    <Compile Include="Models\Phone.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

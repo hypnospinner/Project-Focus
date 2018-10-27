@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ToDo.Models;
 using ToDo.ModelsView;
+using System.Collections;
 
 namespace ToDo
 {
@@ -22,8 +23,7 @@ namespace ToDo
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static DB_API db;
-
+        DB_API db;
         public MainWindow()
         {
             InitializeComponent();
@@ -31,10 +31,15 @@ namespace ToDo
             db.start();
         }
 
-        private void MakeNoteToDB_Button_Click(object sender, RoutedEventArgs e)
+        private void MainButton_Click(object sender, RoutedEventArgs e)
         {
-            string s = "INSERT INTO task VALUES ('homework', 'matan')";
-            db.insert(s);
+            string s = "SELECT * FROM task";
+            
+            ArrayList answer;
+            answer = db.select(s);
+
+            for (int i = 0; i < answer.Count; i++)
+                TextLabel.Content += answer[i].ToString() + "\n";
         }
     }
 }
