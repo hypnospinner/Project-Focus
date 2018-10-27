@@ -47,10 +47,13 @@ namespace ToDo.ViewModels
                 return _addTaskList ??
                     (_addTaskList = new RelayCommand(obj =>
                    {
-                       TaskList taskList = new TaskList(NewTaskListName, tL => TaskLists.Remove(tL));
-                       TaskLists.Add(taskList);
-                       SelectedTaskList = taskList;
-                       NewTaskListName = "";
+                       if (NewTaskListName != "")
+                       {
+                           TaskList taskList = new TaskList(NewTaskListName, tL => TaskLists.Remove(tL));
+                           TaskLists.Add(taskList);
+                           SelectedTaskList = taskList;
+                           NewTaskListName = "";
+                       }
                    }));
             }
         }
@@ -62,7 +65,7 @@ namespace ToDo.ViewModels
                 return _addTask ?? (_addTask = new RelayCommand(obj =>
                 {
                     Task task = new Task(NewTaskName, t => SelectedTaskList.Tasks.Remove(t));
-                    SelectedTaskList.Tasks.Add(task);
+                    SelectedTaskList?.Tasks.Add(task);
                     NewTaskName = "";
                 }));
             }
