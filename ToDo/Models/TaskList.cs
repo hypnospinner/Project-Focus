@@ -17,9 +17,9 @@ namespace ToDo.Models
             TaskListTitle = title;
             Tasks = new ObservableCollection<Task>
             {
-                new Task("task 1 title of " + _taskListTitle),
-                new Task("task 2 title of " + _taskListTitle),
-                new Task("task 3 title of " + _taskListTitle) 
+            //    new Task("task 1 title of " + _taskListTitle),
+            //    new Task("task 2 title of " + _taskListTitle),
+            //    new Task("task 3 title of " + _taskListTitle)
             };
         }
 
