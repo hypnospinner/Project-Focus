@@ -5,7 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToDo"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="ToDosha" Height="450" Width="800">
+   <Window.Resources>
+        <Style x:Key="TaskListStyle" TargetType="TextBlock">
+            <!--<Setter Property="FontFamily" Value="Comic Sans MS" />-->
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="Margin" Value="10" />
+            <!--<Setter Property="BorderThickness" Value="2"/>-->
+            <!--<Setter Property="BorderBrush" Value="Black"/>-->
+        </Style>
+        <Style x:Key="ToDoItemStyle" TargetType="TextBlock">
+            <!--<Setter Property="FontFamily" Value="Comic Sans MS" />-->
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -16,7 +31,8 @@
         <ListView Grid.Column="0" ItemsSource="{Binding TaskLists}" SelectedItem="{Binding SelectedTaskList}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Path=TaskListTitle}"/>
+                    <TextBlock Text="{Binding Path=TaskListTitle}"
+                               Style="{StaticResource TaskListStyle}"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
@@ -25,7 +41,8 @@
                   SelectedItem="{Binding Path=SelectedTaskList.SelectedTask}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Path=TaskTitle}"/>
+                    <TextBlock Text="{Binding Path=TaskTitle}"
+                               Style="{StaticResource ToDoItemStyle}"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
