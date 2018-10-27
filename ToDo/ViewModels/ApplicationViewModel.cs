@@ -2,7 +2,10 @@
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 using ToDo.Models;
+
+using Newtonsoft.Json;
 using System.Windows.Input;
+using System.Collections;
 
 namespace ToDo.ViewModels
 {
@@ -18,12 +21,29 @@ namespace ToDo.ViewModels
 
         public ApplicationViewModel()
         {
-            TaskLists = new ObservableCollection<TaskList>
+            //string s = "SELECT title, id FROM tasks_list";            
+            //ArrayList a = MainWindow.db.select(s);
+            
+            TaskLists = new ObservableCollection<TaskList>();
+
+            var taskLists = MainWindow.db.GetTaskLists();
+
+            foreach(var taskList in taskLists)
             {
-                //new TaskList("Tasklist 1"),
-                //new TaskList("Tasklist 2"),
-                //new TaskList("Tasklist 3"),
-            };
+                var taskListVm = new TaskList(taskList.Name);
+                taskListVm.Id = taskList.Id;
+                TaskLists.Add(taskListVm);
+                foreach(var task in taskList.Tasks)
+                {
+                    var taskVm = new Task(task.Title);
+                    taskVm.IsDone = task.IsDone;
+                    taskVm.TaskNote = task.Description;
+                    taskVm.Id = task.Id;
+                    taskListVm.Tasks.Add(taskVm);
+                }
+            }
+            //for (int i = 0; i < a.Count; i++)
+            //    TaskLists.Add(new TaskList(a[i].[0].ToString(), int.Parse(a[i].[1])));
             // чтение из базы
         }
 
@@ -33,6 +53,7 @@ namespace ToDo.ViewModels
             set
             {
                 selectedTaskList = value;
+// selectedTaskList.TaskListTitle
                 OnPropertyChanged("SelectedTaskList");
             }
         }
@@ -57,6 +78,8 @@ namespace ToDo.ViewModels
                        TaskList taskList = new TaskList(NewTaskListName);
                        TaskLists.Add(taskList);
                        SelectedTaskList = taskList;
+                       string s = "INSERT INTO tasks_list(title) VALUES ('" + NewTaskListName.ToString() + "')" + " RETURNING ID";
+                       SelectedTaskList.Id = MainWindow.db.insert(s);
                        NewTaskListName = "";
                    }));
             }
@@ -70,7 +93,9 @@ namespace ToDo.ViewModels
                 {
                     Task task = new Task(NewTaskName);
                     SelectedTaskList.Tasks.Add(task);
-                    NewTaskName = "";
+                    string s = "INSERT INTO task(title, id_list) VALUES ('" + NewTaskName.ToString() + "','" + SelectedTaskList.Id + "') RETURNING ID";
+                    task.Id = MainWindow.db.insert(s); 
+                    NewTaskName = "";    
                 }));
             }
         }

@@ -15,6 +15,8 @@ namespace ToDo.Models
             TaskTitle = title;
         }
 
+        public int Id { get; set; }
+
         public string TaskTitle
         {
             get => _taskTitle;

@@ -8,13 +8,13 @@ namespace ToDo.Models
     public class TaskList : INotifyPropertyChanged
     {
         private Task _selectedTask;
-
         private string _taskListTitle;
         private ObservableCollection<Task> _tasks;
 
         public TaskList(string title)
         {
             TaskListTitle = title;
+            //_taskId = id;
             Tasks = new ObservableCollection<Task>
             {
             //    new Task("task 1 title of " + _taskListTitle),
@@ -45,6 +45,8 @@ namespace ToDo.Models
                 OnPropertyChanged("SelectedTask");
             }
         }
+
+        public int Id { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
