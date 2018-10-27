@@ -20,7 +20,10 @@
         <ListView Grid.Column="0" ItemsSource="{Binding TaskLists}" SelectedItem="{Binding SelectedTaskList}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Path=TaskListTitle}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Path=TaskListTitle}"/>
+                        <Button Command="{Binding DeleteTaskList}" HorizontalAlignment="Right" Margin="3">-</Button>
+                    </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
@@ -37,6 +40,7 @@
                     <StackPanel Orientation="Horizontal">
                         <CheckBox IsChecked="{ Binding Path=IsDone }" Margin="3"/>
                         <TextBlock Text="{ Binding Path=TaskTitle }"/>
+                        <Button Command="{Binding DeleteTask}" HorizontalAlignment="Right" Margin="3">-</Button>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

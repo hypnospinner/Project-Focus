@@ -8,19 +8,14 @@ namespace ToDo.Models
     public class TaskList : INotifyPropertyChanged
     {
         private Task _selectedTask;
-
         private string _taskListTitle;
         private ObservableCollection<Task> _tasks;
 
-        public TaskList(string title)
+        public TaskList(string title, Action<TaskList> deleteTaskList)
         {
+            DeleteTaskList = new RelayCommand(_ => deleteTaskList(this), _ => true);
             TaskListTitle = title;
-            Tasks = new ObservableCollection<Task>
-            {
-            //    new Task("task 1 title of " + _taskListTitle),
-            //    new Task("task 2 title of " + _taskListTitle),
-            //    new Task("task 3 title of " + _taskListTitle)
-            };
+            Tasks = new ObservableCollection<Task>();
         }
 
         public string TaskListTitle
@@ -44,6 +39,11 @@ namespace ToDo.Models
                 _selectedTask = value;
                 OnPropertyChanged("SelectedTask");
             }
+        }
+
+        public RelayCommand DeleteTaskList
+        {
+            get; private set;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
