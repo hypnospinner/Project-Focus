@@ -69,6 +69,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\RelayCommand.cs" />
+    <Compile Include="Models\SubTask.cs" />
     <Compile Include="Models\Task.cs" />
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\DB_API.cs" />

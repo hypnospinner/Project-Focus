@@ -7,14 +7,17 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="4*" />
         </Grid.ColumnDefinitions>
+        
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
         <ListBox Grid.Column="0" ItemsSource="{Binding TaskLists}"
                  SelectedItem="{Binding SelectedTaskList}">
             <ListBox.ItemTemplate>
@@ -25,7 +28,6 @@
         </ListBox>
 
         <StackPanel Grid.Column="0"/>
-
 
         <ListView Grid.Column="0" ItemsSource="{Binding TaskLists}" SelectedItem="{Binding SelectedTaskList}">
         <ListView.ItemTemplate>
@@ -47,10 +49,26 @@
                   SelectedItem="{Binding Path=SelectedTaskList.SelectedTask}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox IsChecked="{ Binding Path=IsDone }" Margin="3"/>
-                        <TextBlock Text="{ Binding Path=TaskTitle }"/>
-                        <Button Command="{Binding DeleteTask}" HorizontalAlignment="Right" Margin="3">-</Button>
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox IsChecked="{ Binding Path=IsDone }" Margin="3"/>
+                            <TextBlock Text="{ Binding Path=TaskTitle }"/>
+                            <Button Command="{Binding DeleteTask}" HorizontalAlignment="Right" Margin="3">-</Button>
+                        </StackPanel>
+                        <ListView ItemsSource="{Binding Path=SubTasks}" SelectedItem="{Binding Path=SelectedSubTask}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <CheckBox IsChecked="{ Binding Path = IsDone }" Margin="3"/>
+                                        <TextBlock Text="{ Binding Path = SubTaskTitle }"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <StackPanel Orientation="Vertical">
+                            <TextBox Text="{Binding Path=NewSubTaskName, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Button Command="{Binding Path=AddSubTask}">+</Button>
+                        </StackPanel>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

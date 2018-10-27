@@ -15,7 +15,6 @@ namespace ToDo.ViewModels
         private string _newTaskName;
         public ObservableCollection<TaskList> TaskLists { get; set; }
 
-
         public ApplicationViewModel()
         {
             TaskLists = new ObservableCollection<TaskList>();
@@ -78,6 +77,7 @@ namespace ToDo.ViewModels
                 OnPropertyChanged("NewTaskName");
             }
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
