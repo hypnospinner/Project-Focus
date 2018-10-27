@@ -6,20 +6,42 @@
         xmlns:local="clr-namespace:ToDo"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    
-    <Grid>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="4*"/>
-        </Grid.ColumnDefinitions>
+    <Window.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="FontSize" Value="14" />
+            </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="FontSize" Value="14" />
+            </Style>
+        </Window.Resources>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
 
-        <ListBox Grid.Column="0" ItemsSource="{Binding Tasks}"
-                 SelectedItem="{Binding CurrentPhone}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-    </Grid>
+            <ListBox Grid.Column="0" ItemsSource="{Binding Phones}"
+                 SelectedItem="{Binding SelectedPhone}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="5">
+                            <TextBlock FontSize="18" Text="{Binding Path=Title}" />
+                            <TextBlock Text="{Binding Path=Company}" />
+                            <TextBlock Text="{Binding Path=Price}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <StackPanel Grid.Column="1" DataContext="{Binding SelectedPhone}">
+                <TextBlock Text="{Binding Title}"  />
+                <TextBlock Text="Модель" />
+                <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock Text="Производитель" />
+                <TextBox Text="{Binding Company, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock Text="Цена" />
+                <TextBox Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+        </Grid>
 </Window>

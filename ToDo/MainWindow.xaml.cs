@@ -25,6 +25,8 @@ namespace ToDo
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new ApplicationViewModel();
+
         }
     }
 }
