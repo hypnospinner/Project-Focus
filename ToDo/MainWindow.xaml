@@ -8,94 +8,95 @@
         Title="ToDosha" Height="450" Width="800">
    <Window.Resources>
      <Style x:Key="BaseStyle" TargetType="Control">
-       <Setter Property="Margin" Value="15"/>
+       <Setter Property="Margin" Value="10"/>
+       <Setter Property="MinHeight" Value="40"/>
+       <Setter Property="MinWidth" Value="40"/>
        <Setter Property="BorderBrush" Value="Black"/>
        <Setter Property="BorderThickness" Value="1"/>
-       <Setter Property="HorizontalAlignment" Value="Center"/>
+       <Setter Property="HorizontalAlignment" Value="Stretch"/>
      </Style>
 
      <!-- BUTTON -->
      <Style x:Key="AddButtonStyle" TargetType="Button" 
             BasedOn="{StaticResource BaseStyle}">
-       <Setter Property="Width" Value="80"></Setter>
+       <Setter Property="Width" Value="50"></Setter>
      </Style>
 
      <!-- TEXTBOX -->
      <Style x:Key="TextBoxStyle" TargetType="TextBox"
             BasedOn="{StaticResource BaseStyle}">
-       <Setter Property="MinHeight" Value="50"/>
        <Setter Property="HorizontalAlignment" Value="Stretch"/>
      </Style>
 
+     <Style x:Key="BaseTextBlockStyle" TargetType="TextBlock">
+       <Setter Property="Height" Value="Auto"/>
+     </Style>
+
      <!-- TASKLIST / ITEM -->
-      <Style x:Key="TaskListStyle" TargetType="TextBlock">
+      <Style x:Key="TaskListItemStyle" TargetType="TextBlock"
+             BasedOn="{StaticResource BaseTextBlockStyle}">
           <Setter Property="Foreground" Value="Black" />
-          <Setter Property="Padding" Value="8,4"/>
-          <Setter Property="Margin" Value="10" />
-          <!--<Setter Property="BorderThickness" Value="2"/>-->
       </Style>
 
      <!-- TODO / ITEM -->
-      <Style x:Key="ToDoItemStyle" TargetType="TextBlock">
-          <!--<Setter Property="FontFamily" Value="Comic Sans MS" />-->
+      <Style x:Key="ToDoItemStyle" TargetType="TextBlock"
+             BasedOn="{StaticResource BaseTextBlockStyle}">
           <Setter Property="Foreground" Value="Black" />
-          <Setter Property="Margin" Value="5" />
       </Style>
      
     </Window.Resources>
     <Grid>
       <Grid.ColumnDefinitions>
           <ColumnDefinition Width="*" />
-          <ColumnDefinition Width="4*" />
+          <ColumnDefinition Width="3*" />
       </Grid.ColumnDefinitions>
 
-      <Grid.RowDefinitions>
+      <!--<Grid.RowDefinitions>
         <RowDefinition Height="auto" />
         <RowDefinition Height="*" />
-      </Grid.RowDefinitions>
+      </Grid.RowDefinitions>-->
       
       <!-- TASKLISTS -->
-      <ListBox Grid.Column="0" ItemsSource="{Binding TaskLists}"
+      <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="0">
+        <ListBox ItemsSource="{Binding TaskLists}"
                 SelectedItem="{Binding SelectedTaskList}">
           <ListBox.ItemTemplate>
-              <DataTemplate>
-                  <TextBlock Text="{Binding Path=TaskListTitle}"/>
-              </DataTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding Path=TaskListTitle}"
+                         Style="{StaticResource TaskListItemStyle}"/>
+            </DataTemplate>
           </ListBox.ItemTemplate>
-      </ListBox>
-
-      <ListView Grid.Row="0" Grid.Column="0" ItemsSource="{Binding TaskLists}" SelectedItem="{Binding SelectedTaskList}">
-        <ListView.ItemTemplate>
-          <DataTemplate>
-            <TextBlock Text="{Binding Path=TaskListTitle}"
-                       Style="{StaticResource TaskListStyle}"/>
-          </DataTemplate>
-        </ListView.ItemTemplate>
-      </ListView>
-
-      <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical">
-        <TextBox Text="{Binding NewTaskListName, UpdateSourceTrigger=PropertyChanged}" 
+        </ListBox>
+        <DockPanel>
+          <Button Style="{StaticResource AddButtonStyle}" Command="{Binding AddTaskList}"
+                 Content="+"
+                  />
+          <TextBox Text="{Binding NewTaskListName, UpdateSourceTrigger=PropertyChanged}"
                  Style="{StaticResource TextBoxStyle}"/>
-        <Button Style="{StaticResource AddButtonStyle}" Command="{Binding AddTaskList}" Content="+"/>
+        </DockPanel>
       </StackPanel>
-
-      <ListView Grid.Column="1" ItemsSource="{Binding Path=SelectedTaskList.Tasks}" 
+      
+      <!-- TODO ITEMS -->
+      <StackPanel Grid.Column="1">
+        <ListView ItemsSource="{Binding Path=SelectedTaskList.Tasks}"
             SelectedItem="{Binding Path=SelectedTaskList.SelectedTask}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox IsChecked="{ Binding Path=IsDone }" Margin="3"/>
-                        <TextBlock Text="{ Binding Path=TaskTitle }"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <StackPanel Orientation="Horizontal">
+                <CheckBox IsChecked="{ Binding Path=IsDone }" Margin="3"/>
+                <TextBlock Text="{Binding Path=TaskTitle}"
+                           Style="{StaticResource ToDoItemStyle}"/>
+              </StackPanel>
+            </DataTemplate>
+          </ListView.ItemTemplate>
         </ListView>
-
-        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical">
-            <TextBox Text="{Binding NewTaskName, UpdateSourceTrigger=PropertyChanged}" 
-                     Style="{StaticResource TextBoxStyle}"/>
-            <Button Command="{Binding AddTask}" 
-                    Style="{StaticResource AddButtonStyle}">+</Button>
-        </StackPanel>
+        <DockPanel>
+          <Button Command="{Binding AddTask}"
+                  Style="{StaticResource AddButtonStyle}">+</Button>
+          <TextBox Text="{Binding NewTaskName, UpdateSourceTrigger=PropertyChanged}"
+                   Style="{StaticResource TextBoxStyle}"/>
+        </DockPanel>
+      </StackPanel>
+        
     </Grid>
 </Window>
