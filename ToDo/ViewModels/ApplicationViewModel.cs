@@ -14,9 +14,10 @@ namespace ToDo.ViewModels
             get
             {
                 return _addTaskList ?? 
-                    (_addTaskList = new RelayCommand(obj =>
+                    (_addTaskList = new RelayCommand(_ =>
                     {
                         TaskList newTaskList = new TaskList("new Task list");
+                           // добавить в базу переменную 
                         TaskLists.Add(newTaskList);
                         SelectedTaskList = newTaskList;
                     }));
@@ -30,10 +31,12 @@ namespace ToDo.ViewModels
         {
             TaskLists = new ObservableCollection<TaskList>
             {
+
                 new TaskList("Tasklist 1"),
                 new TaskList("Tasklist 2"),
                 new TaskList("Tasklist 3"),
             };
+            // чтение из базы
         }
 
         public ObservableCollection<TaskList> TaskLists { get; set; }
