@@ -5,33 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToDo"
         mc:Ignorable="d"
-<<<<<<< HEAD
-        Title="ToDosha" Height="450" Width="800">
-   <Window.Resources>
-        <Style x:Key="TaskListStyle" TargetType="TextBlock">
-            <!--<Setter Property="FontFamily" Value="Comic Sans MS" />-->
-            <Setter Property="Foreground" Value="Black" />
-            <Setter Property="Padding" Value="8,4"/>
-            <Setter Property="Margin" Value="10" />
-            <!--<Setter Property="BorderThickness" Value="2"/>-->
-            <!--<Setter Property="BorderBrush" Value="Black"/>-->
-        </Style>
-        <Style x:Key="ToDoItemStyle" TargetType="TextBlock">
-            <!--<Setter Property="FontFamily" Value="Comic Sans MS" />-->
-            <Setter Property="Foreground" Value="Black" />
-            <Setter Property="Margin" Value="5" />
-=======
         Title="MainWindow" Height="450" Width="800">
-
-    <Window.Resources>
-        <Style TargetType="TextBlock">
-            <Setter Property="FontSize" Value="14" />
-        </Style>
-        <Style TargetType="TextBox">
-            <Setter Property="FontSize" Value="14" />
->>>>>>> b9983e6f20738d1e68544fb8c20cb551375ce96a
-        </Style>
-    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -52,8 +26,10 @@
         <ListView Grid.Column="0" ItemsSource="{Binding TaskLists}" SelectedItem="{Binding SelectedTaskList}">
         <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Path=TaskListTitle}"
-                               Style="{StaticResource TaskListStyle}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Path=TaskListTitle}"/>
+                        <Button Command="{Binding DeleteTaskList}" HorizontalAlignment="Right" Margin="3">-</Button>
+                    </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
@@ -67,15 +43,11 @@
                   SelectedItem="{Binding Path=SelectedTaskList.SelectedTask}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-<<<<<<< HEAD
-                    <TextBlock Text="{Binding Path=TaskTitle}"
-                               Style="{StaticResource ToDoItemStyle}"/>
-=======
                     <StackPanel Orientation="Horizontal">
                         <CheckBox IsChecked="{ Binding Path=IsDone }" Margin="3"/>
                         <TextBlock Text="{ Binding Path=TaskTitle }"/>
+                        <Button Command="{Binding DeleteTask}" HorizontalAlignment="Right" Margin="3">-</Button>
                     </StackPanel>
->>>>>>> 8da37b29789a7045565cc24cde3b319a2bad47a5
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

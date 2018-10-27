@@ -1,17 +1,18 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 
 namespace ToDo.Models
 {
     public class Task : INotifyPropertyChanged
     {
-        private RelayCommand _deletaTask;
         private string _taskTitle;
         private bool _isDone;
         private string _taskNote;
 
-        public Task(string title)
+        public Task(string title, Action<Task> deleteTask)
         {
+            DeleteTask = new RelayCommand(_ => deleteTask(this), _ => true);
             TaskTitle = title;
         }
 
@@ -45,18 +46,9 @@ namespace ToDo.Models
             }
         }
 
-        public RelayCommand DeletaTask
+        public RelayCommand DeleteTask
         {
-            get
-            {
-                return _deletaTask ?? (_deletaTask = new RelayCommand(
-                    obj =>
-                    {
-
-                    }
-                    ));
-            }
-            
+            get; private set;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

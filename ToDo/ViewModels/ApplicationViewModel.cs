@@ -18,13 +18,7 @@ namespace ToDo.ViewModels
 
         public ApplicationViewModel()
         {
-            TaskLists = new ObservableCollection<TaskList>
-            {
-                //new TaskList("Tasklist 1"),
-                //new TaskList("Tasklist 2"),
-                //new TaskList("Tasklist 3"),
-            };
-            // чтение из базы
+            TaskLists = new ObservableCollection<TaskList>();
         }
 
         public TaskList SelectedTaskList
@@ -37,8 +31,6 @@ namespace ToDo.ViewModels
             }
         }
 
-<<<<<<< HEAD
-=======
         public string NewTaskListName
         {
             get => _newTaskListName;
@@ -56,7 +48,7 @@ namespace ToDo.ViewModels
                 return _addTaskList ??
                     (_addTaskList = new RelayCommand(obj =>
                    {
-                       TaskList taskList = new TaskList(NewTaskListName);
+                       TaskList taskList = new TaskList(NewTaskListName, tL => TaskLists.Remove(tL));
                        TaskLists.Add(taskList);
                        SelectedTaskList = taskList;
                        NewTaskListName = "";
@@ -70,7 +62,7 @@ namespace ToDo.ViewModels
             {
                 return _addTask ?? (_addTask = new RelayCommand(obj =>
                 {
-                    Task task = new Task(NewTaskName);
+                    Task task = new Task(NewTaskName, t => SelectedTaskList.Tasks.Remove(t));
                     SelectedTaskList.Tasks.Add(task);
                     NewTaskName = "";
                 }));
@@ -86,8 +78,6 @@ namespace ToDo.ViewModels
                 OnPropertyChanged("NewTaskName");
             }
         }
-
->>>>>>> 8da37b29789a7045565cc24cde3b319a2bad47a5
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
