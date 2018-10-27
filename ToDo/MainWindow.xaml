@@ -41,5 +41,10 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical">
+            <TextBox Text="{Binding NewTaskName, UpdateSourceTrigger=PropertyChanged}" />
+            <Button Command="{Binding AddTask}">+</Button>
+        </StackPanel>
     </Grid>
 </Window>

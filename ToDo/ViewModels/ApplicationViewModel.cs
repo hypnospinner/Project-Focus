@@ -55,6 +55,7 @@ namespace ToDo.ViewModels
                        TaskList tasklist = new TaskList(NewTaskListName);
                        TaskLists.Add(tasklist);
                        SelectedTaskList = tasklist;
+                       NewTaskListName = "";
                    }));
             }
         }
@@ -66,7 +67,9 @@ namespace ToDo.ViewModels
                 return _addTask ?? (_addTask = new RelayCommand(obj =>
                 {
                     Task task = new Task(NewTaskName);
-                })
+                    SelectedTaskList.Tasks.Add(task);
+                    NewTaskName = "";
+                }));
             }
         }
 
