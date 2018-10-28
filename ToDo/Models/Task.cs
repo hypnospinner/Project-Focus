@@ -74,7 +74,7 @@ namespace ToDo.Models
                         SelectedSubTask = newSubTask;
                         NewSubTaskName = string.Empty;
                         UpdateTask.Execute(null);
-                    }));
+                    }, _ => !(string.IsNullOrWhiteSpace(NewSubTaskName))));
             }
         }
         public string NewSubTaskName

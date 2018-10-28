@@ -121,7 +121,7 @@ namespace ToDo.ViewModels
                            // SelectedTaskList.Id = MainWindow.db.insert(s);
                            NewTaskListName = "";
                        }
-                   }));
+                   }, _ => !string.IsNullOrWhiteSpace(NewTaskListName)));
             }
         }
 
@@ -138,7 +138,7 @@ namespace ToDo.ViewModels
                     // string s = "INSERT INTO task(title, id_list) VALUES ('" + NewTaskName.ToString() + "','" + SelectedTaskList.Id + "') RETURNING ID";
                     // task.Id = MainWindow.db.insert(s); 
                     NewTaskName = "";    
-                }));
+                }, _ => !(string.IsNullOrWhiteSpace(NewTaskName) || null == SelectedTaskList)));
             }
         }
 

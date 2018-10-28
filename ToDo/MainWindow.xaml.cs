@@ -34,5 +34,9 @@ namespace ToDo
             DataContext = new ApplicationViewModel();
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
