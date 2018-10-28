@@ -10,6 +10,7 @@ using static ToDo.Data.DataLayer;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 
 namespace ToDo.ViewModels
 {
@@ -58,19 +59,33 @@ namespace ToDo.ViewModels
 
             foreach(var taskList in taskLists)
             {
-                var taskListVm = new TaskList(taskList.Name, tL => TaskLists.Remove(tL));
+                var taskListVm = new TaskList(taskList.Name, tL =>
+                {
+                    if(MessageBox.Show("Удаление окончательное. Продолжить?", "Удаление", MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.Cancel) return;
+                    TaskLists.Remove(tL);
+                    MainWindow.db.SaveMockTaskLists(Convert(TaskLists));
+                });
                 taskListVm.Id = taskList.Id;
                 TaskLists.Add(taskListVm);
                 foreach(var task in taskList.Tasks)
                 {
-                    var taskVm = new Task(task.Title, t => SelectedTaskList.Tasks.Remove(t), _ => MainWindow.db.SaveMockTaskLists(Convert(TaskLists)));
+                    var taskVm = new Task(task.Title, t =>
+                    {
+                        if (MessageBox.Show("Удаление окончательное. Продолжить?", "Удаление", MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.Cancel) return;
+                        SelectedTaskList.Tasks.Remove(t);
+                        MainWindow.db.SaveMockTaskLists(Convert(TaskLists));
+                    }, _ => MainWindow.db.SaveMockTaskLists(Convert(TaskLists)));
                     taskVm.IsDone = task.IsDone;
                     taskVm.TaskNote = task.Description;
                     taskVm.Id = task.Id;
                     taskListVm.Tasks.Add(taskVm);
                     foreach(var subTask in task.SubTasks ?? new DbSubTask[] { })
                     {
-                        var subTaskVm = new SubTask(subTask.Title, t => SelectedTaskList.SelectedTask.SubTasks.Remove(t), _ => MainWindow.db.SaveMockTaskLists(Convert(TaskLists)));
+                        var subTaskVm = new SubTask(subTask.Title, t =>
+                        {
+                            SelectedTaskList.SelectedTask.SubTasks.Remove(t);
+                            MainWindow.db.SaveMockTaskLists(Convert(TaskLists));
+                        }, _ => MainWindow.db.SaveMockTaskLists(Convert(TaskLists)));
                         subTaskVm.Id = subTask.Id;
                         subTaskVm.IsDone = subTask.IsDone;
                         taskVm.SubTasks.Add(subTaskVm);
