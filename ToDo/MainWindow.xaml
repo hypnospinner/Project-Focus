@@ -171,11 +171,11 @@
                                                     <ColumnDefinition Width="*"/>
                                                     <ColumnDefinition Width="auto"/>
                                                 </Grid.ColumnDefinitions>
-                                                <CheckBox Grid.Column="0"
+                                                <CheckBox Grid.Column="0" HorizontalAlignment="Left"
                                                     IsChecked="{ Binding Path = IsDone }" Margin="3"/>
-                                                <TextBlock Grid.Column="0"
+                                                <TextBlock Grid.Column="0" HorizontalAlignment="Left"
                                                     Text="{ Binding Path = SubTaskTitle }" FontSize="16"/>
-                                                <Button Grid.Column="0" 
+                                                <Button Grid.Column="0" HorizontalAlignment="Right"
                                                     Command="{Binding Path = DeleteSubTask }">✖</Button>
                                             </Grid>
                                         </DataTemplate>

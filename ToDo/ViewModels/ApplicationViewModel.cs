@@ -61,7 +61,7 @@ namespace ToDo.ViewModels
             {
                 var taskListVm = new TaskList(taskList.Name, tL =>
                 {
-                    if(MessageBox.Show("Удаление окончательное. Продолжить?", "Удаление", MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.Cancel) return;
+                    if(MessageBox.Show("THIS ACTION CANNPT BE UNDONE!", "DELETE", MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.Cancel) return;
                     TaskLists.Remove(tL);
                     MainWindow.db.SaveMockTaskLists(Convert(TaskLists));
                 });
@@ -71,7 +71,7 @@ namespace ToDo.ViewModels
                 {
                     var taskVm = new Task(task.Title, t =>
                     {
-                        if (MessageBox.Show("Удаление окончательное. Продолжить?", "Удаление", MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.Cancel) return;
+                        if (MessageBox.Show("THIS ACTION CANNPT BE UNDONE!", "DELETE", MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.Cancel) return;
                         SelectedTaskList.Tasks.Remove(t);
                         MainWindow.db.SaveMockTaskLists(Convert(TaskLists));
                     }, _ => MainWindow.db.SaveMockTaskLists(Convert(TaskLists)));
