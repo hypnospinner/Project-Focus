@@ -71,10 +71,16 @@
                 SelectedItem="{Binding SelectedTaskList}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Path=TaskListTitle}" Style="{StaticResource TaskListStyle}"/>
-                            <Button Command="{Binding DeleteTaskList}" MinWidth="15" MaxHeight="15" VerticalContentAlignment="Center">-</Button>
-                        </StackPanel>
+                        <!--<StackPanel Orientation="Horizontal">-->
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width ="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Path=TaskListTitle}" Style="{StaticResource TaskListStyle}" Grid.Column="0" HorizontalAlignment="Left"/>
+                            <Button Command="{Binding DeleteTaskList}" MinWidth="15" MaxHeight="15" VerticalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Right">-</Button>
+                        </Grid>
+                        <!--</StackPanel>-->
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ListView>
@@ -103,7 +109,7 @@
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox IsChecked="{ Binding Path=IsDone }" Margin="3"/>
+                            <CheckBox IsChecked="{ Binding Path=IsDone }" Command="{ Binding UpdateTask }" Margin="3"/>
                             <TextBlock Text="{ Binding Path=TaskTitle }"/>
                             <Button Command="{Binding DeleteTask}" HorizontalAlignment="Right" Margin="3">-</Button>
                         </StackPanel>

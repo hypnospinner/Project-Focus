@@ -14,9 +14,10 @@ namespace ToDo.Models
         private SubTask _selectedSubTask;
         private ObservableCollection<SubTask> _subTasks;
 
-        public Task(string title, Action<Task> deleteTask)
+        public Task(string title, Action<Task> deleteTask, Action<Task> updateTask)
         {
             DeleteTask = new RelayCommand(_ => deleteTask(this), _ => true);
+            UpdateTask = new RelayCommand(_ => updateTask(this), _ => true);
             TaskTitle = title;
             SubTasks = new ObservableCollection<SubTask>();
         }
@@ -57,6 +58,12 @@ namespace ToDo.Models
         {
             get; private set;
         }
+
+        public RelayCommand UpdateTask
+        {
+            get; private set;
+        }
+
         public RelayCommand AddSubTask
         {
             get {

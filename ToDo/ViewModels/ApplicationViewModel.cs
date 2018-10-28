@@ -8,6 +8,8 @@ using System.Windows.Input;
 using System.Collections;
 using static ToDo.Data.DataLayer;
 using System.IO;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ToDo.ViewModels
 {
@@ -20,6 +22,25 @@ namespace ToDo.ViewModels
         private string _newTaskName;
         public ObservableCollection<TaskList> TaskLists { get; set; }
 
+        public IEnumerable<DbTaskList> Convert(IEnumerable<TaskList> source)
+        {
+            return source.Select(x =>
+            {
+                return new DbTaskList
+                {
+                    Id = x.Id,
+                    Name = x.TaskListTitle,
+                    Tasks = x.Tasks.Select(y => new DbTask
+                    {
+                        Description = y.TaskNote,
+                        IsDone = y.IsDone,
+                        Id = y.Id,
+                        Title = y.TaskTitle
+                    })
+                };
+            });
+        }
+
         public ApplicationViewModel()
         {
             //string s = "SELECT title, id FROM tasks_list";            
@@ -27,11 +48,7 @@ namespace ToDo.ViewModels
             
             TaskLists = new ObservableCollection<TaskList>();
 
-            //var taskLists = MainWindow.db.GetTaskLists();
-            string jsonString;
-            using (var reader = new StreamReader("mock.json"))
-                jsonString = reader.ReadToEnd();
-            var taskLists = JsonConvert.DeserializeObject<DbTaskList[]>(jsonString);
+            var taskLists = MainWindow.db.GetMockTaskLists();
 
             foreach(var taskList in taskLists)
             {
@@ -40,7 +57,7 @@ namespace ToDo.ViewModels
                 TaskLists.Add(taskListVm);
                 foreach(var task in taskList.Tasks)
                 {
-                    var taskVm = new Task(task.Title, t => SelectedTaskList.Tasks.Remove(t));
+                    var taskVm = new Task(task.Title, t => SelectedTaskList.Tasks.Remove(t), _ => MainWindow.db.SaveMockTaskLists(Convert(TaskLists)));
                     taskVm.IsDone = task.IsDone;
                     taskVm.TaskNote = task.Description;
                     taskVm.Id = task.Id;
@@ -85,6 +102,8 @@ namespace ToDo.ViewModels
                            TaskList taskList = new TaskList(NewTaskListName, tL => TaskLists.Remove(tL));
                            TaskLists.Add(taskList);
                            SelectedTaskList = taskList;
+                           taskList.Id = TaskLists.Max(x => x.Id) + 1;
+                           MainWindow.db.SaveMockTaskLists(Convert(TaskLists));
                            // string s = "INSERT INTO tasks_list(title) VALUES ('" + NewTaskListName.ToString() + "')" + " RETURNING ID";
                            // SelectedTaskList.Id = MainWindow.db.insert(s);
                            NewTaskListName = "";
@@ -99,8 +118,10 @@ namespace ToDo.ViewModels
             {
                 return _addTask ?? (_addTask = new RelayCommand(obj =>
                 {
-                    Task task = new Task(NewTaskName, t => SelectedTaskList.Tasks.Remove(t));
+                    Task task = new Task(NewTaskName, t => SelectedTaskList.Tasks.Remove(t), _ => MainWindow.db.SaveMockTaskLists(Convert(TaskLists)));
                     SelectedTaskList.Tasks.Add(task);
+                    task.Id = SelectedTaskList.Tasks.Max(x => x.Id) + 1;
+                    MainWindow.db.SaveMockTaskLists(Convert(TaskLists));
                     // string s = "INSERT INTO task(title, id_list) VALUES ('" + NewTaskName.ToString() + "','" + SelectedTaskList.Id + "') RETURNING ID";
                     // task.Id = MainWindow.db.insert(s); 
                     NewTaskName = "";    

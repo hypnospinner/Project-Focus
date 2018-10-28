@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Npgsql;
 using System.Collections;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace ToDo.Data
 {
@@ -56,6 +58,21 @@ namespace ToDo.Data
             public string Date { get; set; }
 
             public bool IsDone { get; set; }
+        }
+
+        public IEnumerable<DbTaskList> GetMockTaskLists()
+        {
+            string jsonString;
+            using (var reader = new StreamReader("mock.json"))
+                jsonString = reader.ReadToEnd();
+            var taskLists = JsonConvert.DeserializeObject<DbTaskList[]>(jsonString);
+            return taskLists;
+        }
+
+        public void SaveMockTaskLists(IEnumerable<DbTaskList> taskLists)
+        {
+            var jsonString = JsonConvert.SerializeObject(taskLists);
+            File.WriteAllText("mock.json", jsonString);
         }
 
         public IEnumerable<DbTaskList> GetTaskLists()
