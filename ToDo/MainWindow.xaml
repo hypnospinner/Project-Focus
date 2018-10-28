@@ -85,10 +85,11 @@
                     </Grid>
                 </StackPanel>
                 <!-- items -->
-                <ListView Grid.Row="0" Grid.Column="0" Background="Transparent" BorderThickness="0"
+                <ListView Grid.Row="0" Grid.Column="0" Background="Transparent" BorderThickness="1"
                     ItemsSource="{Binding TaskLists}" 
                     SelectedItem="{Binding SelectedTaskList}"
-                      HorizontalAlignment="Stretch">
+                    HorizontalAlignment="Stretch"
+                    Padding="5">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid HorizontalAlignment="Stretch">
@@ -106,7 +107,7 @@
                                 <Button Grid.Column="0" 
                                     HorizontalAlignment="Right"
                                     Width="20" Height="20"
-                                    Margin="10"
+                                    Margin="5"
                                     Command="{Binding DeleteTaskList}">✖</Button>
                             </Grid>
                         </DataTemplate>
@@ -185,7 +186,7 @@
                                                             <ColumnDefinition Width="auto"/>
                                                         </Grid.ColumnDefinitions>
                                                         <CheckBox Grid.Column="0" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Center"
-                                                    IsChecked="{ Binding Path = IsDone }"/>
+                                                    IsChecked="{ Binding Path = IsDone }" Command="{Binding UpdateSubTask}"/>
                                                         <TextBlock Grid.Column="1" HorizontalAlignment="Center" Margin="5" VerticalAlignment="Center"
                                                     Text="{ Binding Path = SubTaskTitle }" FontSize="16"/>
                                                         <Button Grid.Column="2" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Center"
@@ -203,14 +204,15 @@
                                             <TextBox Grid.Column="1"  Text="{Binding Path=NewSubTaskName, UpdateSourceTrigger=PropertyChanged}" 
                                                  FontSize="16" Margin="5,0,0,0" VerticalContentAlignment="Center"
                                                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                                            <Button Grid.Column="0" Command="{Binding Path=AddSubTask}" Width= "80" Height="40" FontSize="20" Background="#DDDDDD" Padding="0,0,0,5">+</Button>
+                                            <Button Grid.Column="0" Command="{Binding Path=AddSubTask}" 
+                                                    Width= "40" Height="40" FontSize="20" Background="#DDDDDD" Padding="0,0,0,5">+</Button>
                                         </Grid>
                                     </StackPanel>
                                     
                                     
                                     <!-- TASK NOTE -->
                                     <DockPanel Grid.Column="1" Margin="0,0,0,0">
-                                        <TextBlock DockPanel.Dock="Top" Text="Add a note: " FontSize="18" Foreground="MediumSeaGreen" Margin="5"/>
+                                        <TextBlock DockPanel.Dock="Top" Text="Add a note: " FontSize="18" Foreground="MediumSeaGreen" Padding="15,5"/>
                                         <TextBox DockPanel.Dock="Bottom" Text="{Binding Path=TaskNote, UpdateSourceTrigger=PropertyChanged}"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="20"
                                             Margin="5"/>

@@ -72,7 +72,7 @@ namespace ToDo.ViewModels
                     var taskVm = new Task(task.Title, t =>
                     {
                         if (MessageBox.Show("THIS ACTION CANNOT BE UNDONE!", "DELETE", MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.Cancel) return;
-                        SelectedTaskList.Tasks.Remove(t);
+                        taskListVm.Tasks.Remove(t);
                         MainWindow.db.SaveMockTaskLists(Convert(TaskLists));
                     }, _ => MainWindow.db.SaveMockTaskLists(Convert(TaskLists)));
                     taskVm.IsDone = task.IsDone;
@@ -83,7 +83,7 @@ namespace ToDo.ViewModels
                     {
                         var subTaskVm = new SubTask(subTask.Title, t =>
                         {
-                            SelectedTaskList.SelectedTask.SubTasks.Remove(t);
+                            taskVm.SubTasks.Remove(t);
                             MainWindow.db.SaveMockTaskLists(Convert(TaskLists));
                         }, _ => MainWindow.db.SaveMockTaskLists(Convert(TaskLists)));
                         subTaskVm.Id = subTask.Id;
