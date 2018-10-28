@@ -80,12 +80,15 @@ namespace ToDo.ViewModels
                 return _addTaskList ??
                     (_addTaskList = new RelayCommand(obj =>
                    {
-                       TaskList taskList = new TaskList(NewTaskListName, tL => TaskLists.Remove(tL));
-                       TaskLists.Add(taskList);
-                       SelectedTaskList = taskList;
-                       string s = "INSERT INTO tasks_list(title) VALUES ('" + NewTaskListName.ToString() + "')" + " RETURNING ID";
-                       SelectedTaskList.Id = MainWindow.db.insert(s);
-                       NewTaskListName = "";
+                       if (NewTaskListName != "")
+                       {
+                           TaskList taskList = new TaskList(NewTaskListName, tL => TaskLists.Remove(tL));
+                           TaskLists.Add(taskList);
+                           SelectedTaskList = taskList;
+                           // string s = "INSERT INTO tasks_list(title) VALUES ('" + NewTaskListName.ToString() + "')" + " RETURNING ID";
+                           // SelectedTaskList.Id = MainWindow.db.insert(s);
+                           NewTaskListName = "";
+                       }
                    }));
             }
         }
@@ -98,8 +101,8 @@ namespace ToDo.ViewModels
                 {
                     Task task = new Task(NewTaskName, t => SelectedTaskList.Tasks.Remove(t));
                     SelectedTaskList.Tasks.Add(task);
-                    string s = "INSERT INTO task(title, id_list) VALUES ('" + NewTaskName.ToString() + "','" + SelectedTaskList.Id + "') RETURNING ID";
-                    task.Id = MainWindow.db.insert(s); 
+                    // string s = "INSERT INTO task(title, id_list) VALUES ('" + NewTaskName.ToString() + "','" + SelectedTaskList.Id + "') RETURNING ID";
+                    // task.Id = MainWindow.db.insert(s); 
                     NewTaskName = "";    
                 }));
             }

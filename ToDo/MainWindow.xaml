@@ -65,20 +65,21 @@
           </ListBox.ItemTemplate>
       </ListBox>-->
 
-      <ListView Grid.Row="0" Grid.Column="0" 
+        <ScrollViewer Height="500">
+            <ListView
                 ItemsSource="{Binding TaskLists}" 
                 SelectedItem="{Binding SelectedTaskList}">
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Path=TaskListTitle}" Style="{StaticResource TaskListStyle}"/>
-                        <Button Command="{Binding DeleteTaskList}">-</Button>
-                    </StackPanel>   
-                </DataTemplate>
-        </ListView.ItemTemplate>
-      </ListView>
-
-      <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Path=TaskListTitle}" Style="{StaticResource TaskListStyle}"/>
+                            <Button Command="{Binding DeleteTaskList}" MinWidth="15" MaxHeight="15" VerticalContentAlignment="Center">-</Button>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ListView>
+        </ScrollViewer>
+                <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical">
         <TextBox Text="{Binding NewTaskListName, UpdateSourceTrigger=PropertyChanged}" 
                  Style="{StaticResource TextBoxStyle}"/>
         <Button Style="{StaticResource AddButtonStyle}" Command="{Binding AddTaskList}" Content="+"/>
