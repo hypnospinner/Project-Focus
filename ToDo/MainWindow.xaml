@@ -134,7 +134,8 @@
                     </Grid>
                 </StackPanel>
                 <!-- items -->
-                <ListView ItemsSource="{Binding Path=SelectedTaskList.Tasks}" 
+                <ScrollViewer>
+                    <ListView ItemsSource="{Binding Path=SelectedTaskList.Tasks}" 
                           SelectedItem="{Binding Path=SelectedTaskList.SelectedTask}"
                           HorizontalAlignment="Stretch"
                           Background="Transparent"
@@ -176,62 +177,73 @@
                                 </Grid>
 
                                 <!-- subtask stuff + note -->
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="1.5*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1.5*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
 
-                                    <!-- SUBTASK items -->
-                                    <StackPanel Grid.Column="0">
-                                        <!-- list of subtasks -->
-                                        <ListView ItemsSource="{Binding Path=SubTasks}" SelectedItem="{Binding Path=SelectedSubTask}"
+                                        <!-- SUBTASK items -->
+                                        <StackPanel Grid.Column="0">
+                                            <!-- list of subtasks -->
+                                            <ListView ItemsSource="{Binding Path=SubTasks}" SelectedItem="{Binding Path=SelectedSubTask}"
                                           HorizontalAlignment="Stretch" Height="100" Margin="0">
-                                            <ListView.ItemTemplate>
-                                                <DataTemplate >
-                                                    <Grid HorizontalAlignment="Stretch" >
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="auto"/>
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="auto"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <CheckBox Grid.Column="0" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Center"
+                                                <ListView.ItemTemplate>
+                                                    <DataTemplate >
+                                                        <Grid HorizontalAlignment="Stretch" >
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="auto"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="auto"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Grid.Style>
+                                                                <Style TargetType="{x:Type Grid}">
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding IsDone}" Value="True">
+                                                                            <Setter Property="Background" Value="MediumSeaGreen"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Grid.Style>
+                                                            <CheckBox Grid.Column="0" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Center"
                                                     IsChecked="{ Binding Path = IsDone }" Command="{Binding UpdateSubTask}"/>
-                                                        <TextBlock Grid.Column="1" HorizontalAlignment="Center" Margin="5" VerticalAlignment="Center"
+                                                            <TextBlock Grid.Column="1" HorizontalAlignment="Center" Margin="5" VerticalAlignment="Center"
                                                     Text="{ Binding Path = SubTaskTitle }" FontSize="16"/>
-                                                        <Button Grid.Column="2" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Center"
+                                                            <Button Grid.Column="2" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Center"
                                                     Command="{Binding Path = DeleteSubTask }">✖</Button>
-                                                    </Grid>
-                                                </DataTemplate>
-                                            </ListView.ItemTemplate>
-                                        </ListView>
-                                        <!-- adding subtask name field + button -->
-                                        <Grid Margin ="0,5,0,5">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="auto"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <TextBox Grid.Column="1"  Text="{Binding Path=NewSubTaskName, UpdateSourceTrigger=PropertyChanged}" 
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ListView.ItemTemplate>
+                                            </ListView>
+                                            <!-- adding subtask name field + button -->
+                                            <Grid Margin ="0,5,0,5">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBox Grid.Column="1"  Text="{Binding Path=NewSubTaskName, UpdateSourceTrigger=PropertyChanged}" 
                                                  FontSize="16" Margin="5,0,0,0" VerticalContentAlignment="Center"
                                                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                                            <Button Grid.Column="0" Command="{Binding Path=AddSubTask}" 
+                                                <Button Grid.Column="0" Command="{Binding Path=AddSubTask}" 
                                                     Width= "40" Height="40" FontSize="20" Background="#DDDDDD" Padding="0,0,0,5">+</Button>
-                                        </Grid>
-                                    </StackPanel>
-                                    
-                                    
-                                    <!-- TASK NOTE -->
-                                    <DockPanel Grid.Column="1" Margin="0,0,0,0">
-                                        <TextBlock DockPanel.Dock="Top" Text="Add a note: " FontSize="18" Foreground="MediumSeaGreen" Padding="15,5"/>
-                                        <TextBox DockPanel.Dock="Bottom" Text="{Binding Path=TaskNote, UpdateSourceTrigger=PropertyChanged}"
+                                            </Grid>
+                                        </StackPanel>
+
+
+
+
+                                        <!-- TASK NOTE -->
+                                        <DockPanel Grid.Column="1" Margin="0,0,0,0">
+                                            <TextBlock DockPanel.Dock="Top" Text="Add a note: " FontSize="18" Foreground="MediumSeaGreen" Padding="15,5"/>
+                                            <TextBox DockPanel.Dock="Bottom" Text="{Binding Path=TaskNote, UpdateSourceTrigger=PropertyChanged}"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="20"
-                                            Margin="5"/>
-                                    </DockPanel>
-                                    
-                                </Grid>
-                                
-                                
-                                <!--<StackPanel>
+                                            Margin="5" TextWrapping="Wrap" AcceptsReturn="True"/>
+                                        </DockPanel>
+
+                                    </Grid>
+
+
+                                    <!--<StackPanel>
                                     <TextBox FontSize="16" Margin="5,0,0,0" VerticalContentAlignment="Center"
                                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                                 </StackPanel>-->
@@ -246,6 +258,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+                </ScrollViewer>
 
 
             </StackPanel>
