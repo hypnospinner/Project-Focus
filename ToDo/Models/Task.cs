@@ -69,9 +69,11 @@ namespace ToDo.Models
             get {
                 return _addSubTask ?? (_addSubTask = new RelayCommand(
                     obj => {
-                        SubTask newSubTask = new SubTask(NewSubTaskName, t => SubTasks.Remove(t));
+                        SubTask newSubTask = new SubTask(NewSubTaskName, t => SubTasks.Remove(t), _ => UpdateTask.Execute(null));
                         SubTasks.Add(newSubTask);
                         SelectedSubTask = newSubTask;
+                        NewSubTaskName = string.Empty;
+                        UpdateTask.Execute(null);
                     }));
             }
         }

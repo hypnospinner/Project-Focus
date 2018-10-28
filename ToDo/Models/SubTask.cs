@@ -8,9 +8,10 @@ namespace ToDo.Models
         private string _subTaskTitle;
         private bool _isDone;
 
-        public SubTask(string title, Action<SubTask> deleteSubTask)
+        public SubTask(string title, Action<SubTask> deleteSubTask, Action<SubTask> updateTask)
         {
             DeleteSubTask = new RelayCommand(_ => deleteSubTask(this), _ => true);
+            UpdateSubTask = new RelayCommand(_ => updateTask(this), _ => true);
             SubTaskTitle = title;
         }
 
@@ -18,6 +19,17 @@ namespace ToDo.Models
         {
             get; private set;
         }
+
+        public RelayCommand UpdateSubTask
+        {
+            get; private set;
+        }
+
+        public int Id
+        {
+            get; set;
+        }
+
         public string SubTaskTitle
         {
             get => _subTaskTitle;
@@ -32,6 +44,7 @@ namespace ToDo.Models
             get => _isDone;
             set
             {
+                _isDone = value;
                 OnPropertyChanged("IsDone");
             }
         }

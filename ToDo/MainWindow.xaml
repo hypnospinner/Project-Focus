@@ -117,7 +117,7 @@
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <CheckBox IsChecked="{ Binding Path = IsDone }" Margin="3"/>
+                                        <CheckBox IsChecked="{ Binding Path = IsDone }" Command="{ Binding UpdateSubTask }" Margin="3"/>
                                         <TextBlock Text="{ Binding Path = SubTaskTitle }"/>
                                     </StackPanel>
                                 </DataTemplate>
