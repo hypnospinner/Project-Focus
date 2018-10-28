@@ -101,9 +101,9 @@
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="2" 
                                        HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
+                                       VerticalAlignment="Center"
                                        Text="{Binding Path=TaskListTitle}" 
-                                           FontSize="22"/>
+                                       FontSize="22"/>
                                 <Button Grid.Column="0" 
                                     HorizontalAlignment="Right"
                                     Width="20" Height="20"
@@ -149,6 +149,16 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
+                                    <Grid.Style>
+                                        <Style TargetType="{x:Type Grid}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsDone}" Value="True">
+                                                    <Setter Property="Background" Value="MediumSeaGreen"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>  
+                                    </Grid.Style>
+                                    
                                     <CheckBox Grid.Column="0" IsChecked="{Binding Path=IsDone}" 
                                               Margin="10" 
                                               HorizontalAlignment="Left"
