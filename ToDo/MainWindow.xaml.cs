@@ -33,5 +33,6 @@ namespace ToDo
 
             DataContext = new ApplicationViewModel();
         }
+
     }
 }

@@ -5,16 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToDo"
         mc:Ignorable="d"
-        Title="ToDosha" Height="450" Width="800">
+        Title="ToDosha" WindowState="Maximized">
    <Window.Resources>
-     <Style x:Key="BaseStyle" TargetType="Control">
-       <Setter Property="Margin" Value="15"/>
-       <Setter Property="BorderBrush" Value="Black"/>
-       <Setter Property="BorderThickness" Value="1"/>
-       <Setter Property="HorizontalAlignment" Value="Center"/>
-     </Style>
+    <Style x:Key="BaseStyle" TargetType="Control">
+        <Setter Property="Margin" Value="10,10,10,10"/>
+        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+    </Style>
 
-     <!-- BUTTON -->
+    <Style x:Key="TaskListItemStyle" TargetType="{x:Type ListViewItem}">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Foreground" Value="LightBlue"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderBrush" Value="LightBlue"/>
+            </Trigger>
+            <Trigger Property="IsSelected" Value="true"></Trigger>
+        </Style.Triggers>
+    </Style>
+       
+        <!-- BUTTON -->
      <Style x:Key="AddButtonStyle" TargetType="Button" 
             BasedOn="{StaticResource BaseStyle}">
        <Setter Property="Width" Value="80"></Setter>
@@ -28,12 +39,10 @@
      </Style>
 
      <!-- TASKLIST / ITEM -->
-      <Style x:Key="TaskListStyle" TargetType="TextBlock">
-          <Setter Property="Foreground" Value="Black" />
-          <Setter Property="Padding" Value="8,4"/>
-          <Setter Property="Margin" Value="10" />
+        <Style x:Key="TaskListStyle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="10" />
           <!--<Setter Property="BorderThickness" Value="2"/>-->
-      </Style>
+        </Style>
 
      <!-- TODO / ITEM -->
       <Style x:Key="ToDoItemStyle" TargetType="TextBlock">
@@ -41,102 +50,131 @@
           <Setter Property="Foreground" Value="Black" />
           <Setter Property="Margin" Value="5" />
       </Style>
-     
+
     </Window.Resources>
-    
-    <Grid>
-      <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="*" />
-          <ColumnDefinition Width="4*" />
-      </Grid.ColumnDefinitions>
+    <StackPanel>
+        <TextBlock Text="Your tasks"
+                   FontSize="20"
+                   Padding="20"
+                   Background="MediumSeaGreen"
+                   Foreground="White"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
 
-      <Grid.RowDefinitions>
-        <RowDefinition Height="auto" />
-        <RowDefinition Height="*" />
-      </Grid.RowDefinitions>
-      
-      <!-- TASKLISTS -->
-      <!--<ListBox Grid.Column="0" ItemsSource="{Binding TaskLists}"
-                SelectedItem="{Binding SelectedTaskList}">
-          <ListBox.ItemTemplate>
-              <DataTemplate>
-                  <TextBlock Text="{Binding Path=TaskListTitle}"/>
-              </DataTemplate>
-          </ListBox.ItemTemplate>
-      </ListBox>-->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
 
-        <ScrollViewer Height="500">
-            <ListView
-                ItemsSource="{Binding TaskLists}" 
-                SelectedItem="{Binding SelectedTaskList}">
-                <ItemsControl.ItemTemplate>
+            <!-- TASKLISTS -->
+            <StackPanel HorizontalAlignment="Stretch" >
+            <ListView Grid.Row="0" Grid.Column="0" Background="Transparent" BorderThickness="0"
+                    ItemsSource="{Binding TaskLists}" 
+                    SelectedItem="{Binding SelectedTaskList}"
+                    ItemContainerStyle="{StaticResource TaskListItemStyle}"
+                      HorizontalAlignment="Stretch">
+                <ListView.ItemTemplate>
                     <DataTemplate>
-                        <!--<StackPanel Orientation="Horizontal">-->
                         <Grid HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width ="auto"/>
+                                <ColumnDefinition/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition SharedSizeGroup="centerColumn" Width="*"/>
+                                    <ColumnDefinition Width="30"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Path=TaskListTitle}" Style="{StaticResource TaskListStyle}" Grid.Column="0" HorizontalAlignment="Left"/>
-                            <Button Command="{Binding DeleteTaskList}" MinWidth="15" MaxHeight="15" VerticalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Right">-</Button>
+                            <TextBlock Grid.Column="0" 
+                                       HorizontalAlignment="Center"
+                                       Text="{Binding Path=TaskListTitle}" 
+                                       Style="{StaticResource TaskListStyle}"/>
+                                <Button Grid.Column="2" 
+                                    HorizontalAlignment="Right"
+                                    Width="20" Height="20"
+                                    Margin="10"
+                                    Command="{Binding DeleteTaskList}">✖</Button>
                         </Grid>
-                        <!--</StackPanel>-->
                     </DataTemplate>
-                </ItemsControl.ItemTemplate>
+                </ListView.ItemTemplate>
             </ListView>
-        </ScrollViewer>
+
                 <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical">
-        <TextBox Text="{Binding NewTaskListName, UpdateSourceTrigger=PropertyChanged}" 
-                 Style="{StaticResource TextBoxStyle}"/>
-        <Button Style="{StaticResource AddButtonStyle}" Command="{Binding AddTaskList}" Content="+"/>
-      </StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0"  Style="{StaticResource AddButtonStyle}" Command="{Binding AddTaskList}" Content="+"/>
 
-      <!--<ListView Grid.Column="1" ItemsSource="{Binding Path=SelectedTaskList.Tasks}" 
-            SelectedItem="{Binding Path=SelectedTaskList.SelectedTask}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox IsChecked="{ Binding Path=IsDone }" Margin="3"/>
-                        <TextBlock Text="{ Binding Path=TaskTitle }"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>-->
+                        <TextBox Grid.Column="1" Text="{Binding NewTaskListName, UpdateSourceTrigger=PropertyChanged}" 
+                         Style="{StaticResource TextBoxStyle}"/>
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
 
-        <ListView Grid.Column="1" ItemsSource="{Binding Path=SelectedTaskList.Tasks}" 
-                  SelectedItem="{Binding Path=SelectedTaskList.SelectedTask}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
-                            <CheckBox IsChecked="{ Binding Path=IsDone }" Command="{ Binding UpdateTask }" Margin="3"/>
-                            <TextBlock Text="{ Binding Path=TaskTitle }"/>
-                            <Button Command="{Binding DeleteTask}" HorizontalAlignment="Right" Margin="3">-</Button>
-                        </StackPanel>
-                        <ListView ItemsSource="{Binding Path=SubTasks}" SelectedItem="{Binding Path=SelectedSubTask}">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <CheckBox IsChecked="{ Binding Path = IsDone }" Command="{ Binding UpdateSubTask }" Margin="3"/>
-                                        <TextBlock Text="{ Binding Path = SubTaskTitle }"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                        <StackPanel Orientation="Vertical">
-                            <TextBox Text="{Binding Path=NewSubTaskName, UpdateSourceTrigger=PropertyChanged}"/>
-                            <Button Command="{Binding Path=AddSubTask}">+</Button>
-                        </StackPanel>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            <StackPanel Grid.Column="1">
+                <ListView ItemsSource="{Binding Path=SelectedTaskList.Tasks}" 
+                          SelectedItem="{Binding Path=SelectedTaskList.SelectedTask}"
+                          HorizontalAlignment="Stretch"
+                          Background="Transparent"
+                          BorderThickness="0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical" 
+                                        HorizontalAlignment="Stretch" Width="300">
+                                <Grid HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Grid.Column="0" IsChecked="{Binding Path=IsDone}" 
+                                              Margin="10"
+                                              HorizontalAlignment="Left"
+                                              VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="1" Text="{ Binding Path=TaskTitle }"
+                                               Margin="10"
+                                               HorizontalAlignment="Left"
+                                               VerticalAlignment="Center"/>
+                                    <Button Grid.Column="2" Command="{Binding DeleteTask}" 
+                                            Margin="10"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Center" Height="20" Width="20">-</Button>
+                                </Grid>
+                                <ListView ItemsSource="{Binding Path=SubTasks}" SelectedItem="{Binding Path=SelectedSubTask}"
+                                          HorizontalAlignment="Stretch">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <CheckBox IsChecked="{ Binding Path = IsDone }" Margin="3"/>
+                                                <TextBlock Text="{ Binding Path = SubTaskTitle }"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                                <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+                                    <TextBox Text="{Binding Path=NewSubTaskName, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <Button Command="{Binding Path=AddSubTask}">+</Button>
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
 
-        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical">
-            <TextBox Text="{Binding NewTaskName, UpdateSourceTrigger=PropertyChanged}" 
-                     Style="{StaticResource TextBoxStyle}"/>
-            <Button Command="{Binding AddTask}" 
-                    Style="{StaticResource AddButtonStyle}">+</Button>
-        </StackPanel>
-    </Grid>
+                <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Command="{Binding AddTask}" 
+                                Style="{StaticResource AddButtonStyle}">+</Button>
+                        <TextBox Grid.Column="1" Text="{Binding NewTaskName, UpdateSourceTrigger=PropertyChanged}" 
+                                 Style="{StaticResource TextBoxStyle}"/>
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </StackPanel>
 </Window>
