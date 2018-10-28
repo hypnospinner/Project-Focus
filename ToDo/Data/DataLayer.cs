@@ -36,6 +36,15 @@ namespace ToDo.Data
             return id;
         }
 
+        public class DbSubTask
+        {
+            public string Title { get; set; }
+
+            public int Id { get; set; }
+
+            public bool IsDone { get; set; }
+        }
+
         public class DbTaskList
         {
             public int Id { get; set; }
@@ -58,6 +67,8 @@ namespace ToDo.Data
             public string Date { get; set; }
 
             public bool IsDone { get; set; }
+
+            public IEnumerable<DbSubTask> SubTasks { get; set; }
         }
 
         public IEnumerable<DbTaskList> GetMockTaskLists()

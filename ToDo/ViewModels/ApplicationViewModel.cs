@@ -35,7 +35,13 @@ namespace ToDo.ViewModels
                         Description = y.TaskNote,
                         IsDone = y.IsDone,
                         Id = y.Id,
-                        Title = y.TaskTitle
+                        Title = y.TaskTitle,
+                        SubTasks = y.SubTasks.Select(z => new DbSubTask
+                        {
+                            Id = z.Id,
+                            Title = z.SubTaskTitle,
+                            IsDone = z.IsDone
+                        })
                     })
                 };
             });
@@ -62,6 +68,13 @@ namespace ToDo.ViewModels
                     taskVm.TaskNote = task.Description;
                     taskVm.Id = task.Id;
                     taskListVm.Tasks.Add(taskVm);
+                    foreach(var subTask in task.SubTasks ?? new DbSubTask[] { })
+                    {
+                        var subTaskVm = new SubTask(subTask.Title, t => SelectedTaskList.SelectedTask.SubTasks.Remove(t), _ => MainWindow.db.SaveMockTaskLists(Convert(TaskLists)));
+                        subTaskVm.Id = subTask.Id;
+                        subTaskVm.IsDone = subTask.IsDone;
+                        taskVm.SubTasks.Add(subTaskVm);
+                    }
                 }
             }
             //for (int i = 0; i < a.Count; i++)
