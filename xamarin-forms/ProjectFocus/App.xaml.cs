@@ -1,6 +1,4 @@
-﻿using System;
-
-using Microsoft.AppCenter;
+﻿using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 
 using Xamarin.Forms;
@@ -15,9 +13,10 @@ namespace ProjectFocus
         {
             InitializeComponent();
 
+            // The instantiation could be transferred to XAML
+            // code to solve this one in great style.
+            // [Exercise][ToDo] Find a way to solve this in pure XAML.
             var navigationPage = new NavigationPage();
-            navigationPage.Title = "Strange";
-
             MainPage = navigationPage;
             new AppComposer().Compose(navigationPage);
         }
@@ -28,8 +27,7 @@ namespace ProjectFocus
                   "android={Your Android App secret here}" +
                   "ios={Your iOS App secret here}",
                   typeof(Analytics));
-            // Handle when your app starts
-        }
+       }
 
         protected override void OnSleep()
         {

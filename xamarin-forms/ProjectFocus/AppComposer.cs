@@ -8,7 +8,9 @@ using Xamarin.Forms;
 namespace ProjectFocus
 {
     /// <summary>
-    /// This class does 
+    /// This class serves to register all the injected dependencies
+    /// an resolve the only instance to be ever resolved manually which
+    /// is the main view model of the application.
     /// </summary>
     public class AppComposer
     {
@@ -42,6 +44,7 @@ namespace ProjectFocus
 
             var container = builder.Build();
 
+            // [Think][ToDo] Do we really have to resolve this one manually?
             return container.Resolve<IMainViewModel>();
         }
     }

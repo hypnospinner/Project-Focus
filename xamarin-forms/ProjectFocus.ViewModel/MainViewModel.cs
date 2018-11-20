@@ -8,9 +8,12 @@ namespace ProjectFocus.ViewModel
     public class MainViewModel : ViewModelBase, IMainViewModel
     {
         INavigationService _navigationService;
+
+        // This is an automatic view-model-producing factory method
+        // brought to us by Autofac.
         Func<IProblemViewModel> _getProblemViewModel;
 
-        // Change to property injection
+        // [Engineering][ToDo] Change to property injection.
         public MainViewModel(
             INavigationService navigationService,
             Func<IProblemViewModel> getProblemViewModel)
