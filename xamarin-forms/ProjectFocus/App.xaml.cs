@@ -15,7 +15,11 @@ namespace ProjectFocus
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            var navigationPage = new NavigationPage();
+            navigationPage.Title = "Strange";
+
+            MainPage = navigationPage;
+            new AppComposer().Compose(navigationPage);
         }
 
         protected override void OnStart()
