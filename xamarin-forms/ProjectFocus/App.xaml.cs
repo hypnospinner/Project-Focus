@@ -18,6 +18,9 @@ namespace ProjectFocus
             // [Exercise][ToDo] Find a way to solve this in pure XAML.
             var navigationPage = new NavigationPage();
             MainPage = navigationPage;
+
+            if (DesignMode.IsDesignModeEnabled) return;
+
             new AppComposer().Compose(navigationPage);
         }
 
