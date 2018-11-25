@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ProjectFocus.Interface;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using ProjectFocus.Interface;
+using Xamarin.Forms;
 
-namespace ProjectFocus.Service.Android
+[assembly: Dependency(typeof(ProjectFocus.Droid.Localize))]
+namespace ProjectFocus.Droid
 {
-    public class LocalizationService : ILocalize
+    public class Localize : ILocalize
     {
         public void SetLocale(CultureInfo ci)
         {

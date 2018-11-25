@@ -1,8 +1,9 @@
-﻿using Microsoft.AppCenter;
-using Microsoft.AppCenter.Analytics;
+﻿using Microsoft.AppCenter.Analytics;
 using ProjectFocus.Integration;
+using ProjectFocus.Interface;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using AppCenterDevice = Microsoft.AppCenter.Device;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace ProjectFocus
@@ -21,12 +22,19 @@ namespace ProjectFocus
 
             if (DesignMode.IsDesignModeEnabled) return;
 
+            if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
+            {
+                var ci = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
+                //AppResources.Culture = ci; // set the RESX for resource localization
+                DependencyService.Get<ILocalize>().SetLocale(ci); // set the Thread for locale-aware methods
+            }
+
             new CompositionRoot().Compose(navigationPage);
         }
 
         protected override void OnStart()
         {
-            AppCenter.Start("uwp=fd480248-b061-4b39-8554-a60bd945bf1e;" +
+            Microsoft.AppCenter.AppCenter.Start("uwp=fd480248-b061-4b39-8554-a60bd945bf1e;" +
                   "android={Your Android App secret here}" +
                   "ios={Your iOS App secret here}",
                   typeof(Analytics));

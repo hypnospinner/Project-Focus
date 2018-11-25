@@ -4,6 +4,7 @@ using ProjectFocus.Service;
 using ProjectFocus.View;
 using ProjectFocus.ViewModel;
 using System;
+using System.Globalization;
 using Xamarin.Forms;
 
 namespace ProjectFocus.Integration
@@ -34,20 +35,6 @@ namespace ProjectFocus.Integration
                    .AsImplementedInterfaces()
                    .PropertiesAutowired()
                    .SingleInstance();
-
-            // [ToDo] Android-specific services are registered here
-            // For iOS specific code go to 
-            // https://docs.microsoft.com/en-us/xamarin/xamarin-forms/app-fundamentals/localization/text?tabs=windows
-            if (Device.RuntimePlatform == Device.Android)
-            {
-                var serviceAssemblyAndroid = typeof(Service.Android.LocalizationService).Assembly;
-
-                builder.RegisterAssemblyTypes(serviceAssemblyAndroid)
-                       .Where(t => t.Name.EndsWith("Service", StringComparison.InvariantCultureIgnoreCase))
-                       .AsImplementedInterfaces()
-                       .PropertiesAutowired()
-                       .SingleInstance();
-            }
 
             builder.RegisterInstance(navigation)
                    .As<NavigationPage>();
