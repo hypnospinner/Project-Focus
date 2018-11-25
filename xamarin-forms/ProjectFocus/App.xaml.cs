@@ -1,6 +1,6 @@
 ﻿using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
-
+using ProjectFocus.Integration;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -21,7 +21,7 @@ namespace ProjectFocus
 
             if (DesignMode.IsDesignModeEnabled) return;
 
-            new AppComposer().Compose(navigationPage);
+            new CompositionRoot().Compose(navigationPage);
         }
 
         protected override void OnStart()

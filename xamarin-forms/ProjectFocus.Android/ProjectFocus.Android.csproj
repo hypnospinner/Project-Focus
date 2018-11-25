@@ -92,6 +92,10 @@
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ProjectFocus.View\ProjectFocus.View.csproj">
+      <Project>{148fb6d1-f610-43ce-98a0-75eafe061639}</Project>
+      <Name>ProjectFocus.View</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ProjectFocus\ProjectFocus.csproj">
       <Project>{7F2C508E-068E-44AF-B244-7BF4BDEFB0DC}</Project>
       <Name>ProjectFocus</Name>

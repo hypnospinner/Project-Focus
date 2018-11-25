@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using Xamarin.Forms;
 
-namespace ProjectFocus
+namespace ProjectFocus.View
 {
     /// <summary>
     /// A design-time-only behavior that binds its

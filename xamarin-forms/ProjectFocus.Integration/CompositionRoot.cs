@@ -1,18 +1,14 @@
 ﻿using Autofac;
 using ProjectFocus.Interface;
 using ProjectFocus.Service;
+using ProjectFocus.View;
 using ProjectFocus.ViewModel;
 using System;
 using Xamarin.Forms;
 
-namespace ProjectFocus
+namespace ProjectFocus.Integration
 {
-    /// <summary>
-    /// This class serves to register all the injected dependencies
-    /// an resolve the only instance to be ever resolved manually which
-    /// is the main view model of the application.
-    /// </summary>
-    public class AppComposer
+    public class CompositionRoot
     {
         public IMainViewModel Compose(NavigationPage navigation)
         {
