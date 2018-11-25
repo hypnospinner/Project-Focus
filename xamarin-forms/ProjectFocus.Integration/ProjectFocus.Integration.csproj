@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ProjectFocus.Interface\ProjectFocus.Interface.csproj" />
+    <ProjectReference Include="..\ProjectFocus.Service.Android\ProjectFocus.Service.Android.csproj" />
     <ProjectReference Include="..\ProjectFocus.Service\ProjectFocus.Service.csproj" />
     <ProjectReference Include="..\ProjectFocus.ViewModel\ProjectFocus.ViewModel.csproj" />
     <ProjectReference Include="..\ProjectFocus.View\ProjectFocus.View.csproj" />
