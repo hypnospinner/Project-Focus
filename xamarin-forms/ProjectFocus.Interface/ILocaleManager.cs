@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ProjectFocus.Interface
 {
-    public interface ILocalize
+    public interface ILocaleManager
     {
         CultureInfo GetCurrentCultureInfo();
         void SetLocale(CultureInfo ci);

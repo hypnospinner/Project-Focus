@@ -41,7 +41,17 @@ namespace ProjectFocus.Integration
 
             var container = builder.Build();
 
-            // [Think][ToDo] Do we really have to resolve this one manually?
+            // This here is platform-specific localization integration code
+            if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
+            {
+                var localeManager = DependencyService.Get<ILocaleManager>();
+                var cultureInfo = localeManager.GetCurrentCultureInfo();
+                // set the RESX for resource localization
+                AppResources.Culture = cultureInfo;
+                // set the Thread for locale-aware methods
+                localeManager.SetLocale(cultureInfo);
+            }
+
             return container.Resolve<IMainViewModel>();
         }
     }
