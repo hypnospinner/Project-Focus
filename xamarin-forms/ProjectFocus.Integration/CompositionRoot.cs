@@ -4,7 +4,6 @@ using ProjectFocus.Service;
 using ProjectFocus.View;
 using ProjectFocus.ViewModel;
 using System;
-using System.Globalization;
 using Xamarin.Forms;
 
 namespace ProjectFocus.Integration
