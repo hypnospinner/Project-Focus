@@ -7,21 +7,15 @@ namespace ProjectFocus.ViewModel
 {
     public class MainViewModel : ViewModelBase, IMainViewModel
     {
-        INavigationService _navigationService;
+        public INavigationService NavigationService { get; set; }
 
         // This is an automatic view-model-producing factory method
         // brought to us by Autofac.
-        Func<IProblemViewModel> _getProblemViewModel;
+        public Func<IProblemViewModel> GetProblemViewModel { get; set; }
 
-        // [Engineering][ToDo] Change to property injection.
-        public MainViewModel(
-            INavigationService navigationService,
-            Func<IProblemViewModel> getProblemViewModel)
+        public void StartPresentation()
         {
-            _navigationService = navigationService;
-            _navigationService.Navigate(PageKey.Main, this);
-
-            _getProblemViewModel = getProblemViewModel;
+            NavigationService.Navigate(PageKey.Main, this);
         }
 
         private ICommand _problemCommand;
@@ -32,7 +26,7 @@ namespace ProjectFocus.ViewModel
                 if(_problemCommand == null)
                 {
                     _problemCommand = new Command(() =>
-                        _navigationService.Navigate(PageKey.Problem, _getProblemViewModel()));
+                        NavigationService.Navigate(PageKey.Problem, GetProblemViewModel()));
                 }
                 return _problemCommand;
             }
