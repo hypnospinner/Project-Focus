@@ -13,9 +13,6 @@ namespace ProjectFocus
         {
             InitializeComponent();
 
-            // The instantiation could be transferred to XAML
-            // code to solve this one in great style.
-            // [Exercise][ToDo] Find a way to solve this in pure XAML.
             var navigationPage = new NavigationPage();
             MainPage = navigationPage;
 
