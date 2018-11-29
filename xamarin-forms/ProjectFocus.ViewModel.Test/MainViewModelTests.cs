@@ -11,7 +11,13 @@ namespace ProjectFocus.ViewModel.Test
         {
             var mockProblemViewModel = new Mock<IProblemViewModel>();
             var mockNavigationService = new Mock<INavigationService>();
-            var sut = new MainViewModel(mockNavigationService.Object, () => mockProblemViewModel.Object);
+            var sut = new MainViewModel();
+            // Property injection
+            sut.NavigationService = mockNavigationService.Object;
+            sut.GetProblemViewModel = () => mockProblemViewModel.Object;
+
+            // Start presentation
+            sut.StartPresentation();
 
             // Verify MainPage navigation with MainViewModel on creation
             mockNavigationService.Verify(x => x.Navigate(
