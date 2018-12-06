@@ -19,8 +19,6 @@ module Command =
 
     type CreateProblem =
         {
-            Id: Guid;
-            CreatedAt: DateTime;
             Name: string;
             Description: string;
             Content: string;

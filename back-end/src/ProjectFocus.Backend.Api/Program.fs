@@ -17,13 +17,17 @@ open ProjectFocus.Backend.Common.Event
 module Program =
     let exitCode = 0
 
+    let private handleEvent (host: IWebHost) event =
+        async{
+            printfn "An event %s has been caught" (event.ToString())
+        }
+
     [<EntryPoint>]
     let main args =
 
-        (Service.bus
-                |> Service.event (fun client e -> 
-                    ( printfn "An event %s has been caught" (e.ToString());
-                      ))
-                |> Service.host<Startup>
-                |> Service.run) args ()
+        let buildHost = Host.build<Startup>
+                        >> Host.subscribe<AuthenticatedEvent> Host.bus handleEvent
+                        >> Host.run
+        buildHost args
+        
         exitCode

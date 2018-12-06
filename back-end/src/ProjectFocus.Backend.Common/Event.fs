@@ -48,3 +48,4 @@ module Event =
     type Event =
        | AuthenticatedEvent of AuthenticatedEvent
        | UnrestrictedEvent of UnrestrictedEvent
+       | RejectedEvent of RejectedEvent

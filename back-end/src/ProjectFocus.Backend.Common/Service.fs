@@ -1,91 +1,25 @@
 namespace ProjectFocus.Backend.Common
 
 open System
-open Command
-open Microsoft.AspNetCore.Hosting
 open Microsoft.Extensions.Configuration
-open Microsoft.AspNetCore
 open RawRabbit
-open RawRabbit.Pipe
-open RawRabbit.Common
-open RawRabbit.Operations.Subscribe.Context
-open System.Reflection
-open System.Threading.Tasks
-open Microsoft.Extensions.Configuration
 open Microsoft.Extensions.DependencyInjection
 open RawRabbit.Configuration
 open RawRabbit.Instantiation
 open RawRabbit.Serialization
-open RawRabbit.Serialization
 open System.Text
 open Newtonsoft.Json
+open MongoDB.Driver
+open Microsoft.Extensions.Options
+open MongoDB.Bson.Serialization.Conventions
+open MongoDB.Bson
+
 
 module Service =
 
-    let run (getWebHost: string[] -> IWebHost) =
-        fun (args: string[]) -> 
-            (getWebHost args).Run
-
-    let host<'TStartup when 'TStartup : not struct> (getBusClient: IWebHost -> IBusClient) =
-        fun (args: string[]) -> 
-            let config = (new ConfigurationBuilder())
-                          .AddEnvironmentVariables()
-                          .AddCommandLine(args)
-                          .Build()
-            let _host = WebHost.CreateDefaultBuilder(args)
-                              .UseConfiguration(config)
-                              .UseStartup<'TStartup>()
-                              .Build()
-
-            getBusClient _host |> ignore
-            _host
-
-    let bus =
-        fun (host: IWebHost) ->
-            let busClient = host
-                             .Services
-                             .GetService(typeof<IBusClient>)
-                             :?> IBusClient;
-            busClient
-
-    let private asTask<'T> (handle: 'T -> unit) =
-        let doHandleTask cmd = 
-                async {
-                          handle cmd
-                          return new Ack() :> Acknowledgement
-                      }|> Async.StartAsTask
-
-        new Func<'T, Task<Acknowledgement>>(doHandleTask)
-
-    let command<'TCommand> (handle: IBusClient -> 'TCommand -> unit) (getBusClient: IWebHost -> IBusClient) =
-        fun (host: IWebHost) ->
-            let busClient = getBusClient host
-
-            let useContext (ctx: ISubscribeContext) =
-                ctx.UseSubscribeConfiguration(fun cfg ->
-                    cfg.FromDeclaredQueue(fun q ->
-                        q.WithName(Assembly.GetEntryAssembly().GetName().Name)|>ignore)|>ignore)|>ignore
-
-            busClient.SubscribeAsync(handle busClient |> asTask, useContext) |> ignore
-            busClient
-
-    let event<'TEvent> (handle: IBusClient -> 'TEvent -> unit) (getBusClient: IWebHost -> IBusClient) =
-        fun (host: IWebHost) ->
-            let busClient = getBusClient host
-
-            let useContext (ctx: ISubscribeContext) =
-                ctx.UseSubscribeConfiguration(fun cfg ->
-                    cfg.FromDeclaredQueue(fun q ->
-                        q.WithName(Assembly.GetEntryAssembly().GetName().Name)|>ignore)|>ignore)|>ignore
-
-            busClient.SubscribeAsync(handle busClient |> asTask, useContext) |> ignore
-            busClient
-
     type RabbitMqOptions () = inherit RawRabbitConfiguration()
 
-    type CustomSerializer () = inherit RawRabbit.Serialization.JsonSerializer(new Newtonsoft.Json.JsonSerializer())
-
-    type CoolSerializer () =
+    type private NewtonsoftSerializer () =
 
         interface ISerializer with
             member this.ContentType = "application/json"
@@ -109,6 +43,38 @@ module Service =
         section.Bind options
         let rawRabbitOptions = new RawRabbitOptions()
         rawRabbitOptions.ClientConfiguration <- options
-        rawRabbitOptions.DependencyInjection <- fun ioc -> ioc.AddSingleton<ISerializer, CoolSerializer>() |>ignore
+        rawRabbitOptions.DependencyInjection <- fun ioc -> ioc.AddSingleton<ISerializer, NewtonsoftSerializer>() |>ignore
         let client = RawRabbitFactory.CreateSingleton rawRabbitOptions
         services.AddSingleton<IBusClient> client |> ignore
+
+    type MongoOptions () =
+            member val ConnectionString = String.Empty with get, set
+            member val Database = String.Empty with get, set
+
+    type MongoConventions () =
+
+        interface IConventionPack with
+            member this.Conventions =
+                Seq.ofList
+                 [ 
+                     IgnoreExtraElementsConvention(true) :> IConvention;
+                     EnumRepresentationConvention(BsonType.String) :> IConvention;
+                     CamelCaseElementNameConvention() :> IConvention
+                 ]
+
+    let addMongoDb (configuration: IConfiguration) (services: IServiceCollection) =
+        services
+        |> fun s -> s.Configure<MongoOptions> (configuration.GetSection("mongo"))
+        |> fun s -> s.AddSingleton<MongoClient> (fun serviceProvider ->
+            (
+                let options = serviceProvider.GetService<IOptions<MongoOptions>>()
+                MongoClient(options.Value.ConnectionString)
+            ))
+        |> fun s -> s.AddScoped<IMongoDatabase> (fun serviceProvider ->
+           (
+               let options = serviceProvider.GetService<IOptions<MongoOptions>>()
+               let client = serviceProvider.GetService<MongoClient>()
+               client.GetDatabase(options.Value.Database)
+           ))
+        |> ignore
+        ConventionRegistry.Register("ProjectFocusConventions", MongoConventions(), fun _ -> true)
