@@ -25,16 +25,13 @@ module Service =
             member this.ContentType = "application/json"
             member this.Serialize o =
                 let s = JsonConvert.SerializeObject o
-                printfn "Serialized %s" s
                 Encoding.UTF8.GetBytes s
             member this.Deserialize<'T> a =
                 let s = Encoding.UTF8.GetString a
-                printfn "Deserializing stuff %s" s
                 JsonConvert.DeserializeObject<'T> s
 
             member this.Deserialize (t,a) =
                 let s = Encoding.UTF8.GetString a
-                printfn "Deserializing type %s %s" t.Name s
                 JsonConvert.DeserializeObject(s, t)
 
     let addRabbitMq (configuration: IConfiguration) (services: IServiceCollection) =

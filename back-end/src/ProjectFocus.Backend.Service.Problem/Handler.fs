@@ -15,7 +15,6 @@ module Handler =
         command.Command
         |> function
            | CreateProblem c -> async {
-
                                 let problem = {
                                         Id = Guid.NewGuid();
                                         UserId = command.UserId;

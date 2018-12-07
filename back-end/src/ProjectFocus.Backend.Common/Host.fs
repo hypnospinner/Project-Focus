@@ -32,7 +32,9 @@ module Host =
         webHost
 
     let db (host: IWebHost) =
-        let dataBase = host.Services.GetService<IMongoDatabase>();
+        // This is a scoped service and so we create it.
+        use scope = host.Services.CreateScope()
+        let dataBase = scope.ServiceProvider.GetRequiredService<IMongoDatabase>();
         dataBase
 
     let bus (host: IWebHost) =
@@ -49,7 +51,7 @@ module Host =
                       }|> Async.StartAsTask
         doHandleTask
 
-    let subscribe<'TMessage> (getBus: IWebHost -> IBusClient) (handle: IWebHost -> 'TMessage -> Async<unit>) (host: IWebHost) =
+    let subscribe<'TMessage> (getBus: IWebHost -> IBusClient) (handle: IWebHost -> 'TMessage -> Async<unit>) (host) =
         let bus = getBus host
 
         let useContext (ctx: ISubscribeContext) =
