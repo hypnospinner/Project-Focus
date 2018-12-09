@@ -34,5 +34,11 @@
     <string>ProjectFocus</string>
     <key>XSAppIconAssets</key>
     <string>Assets.xcassets/AppIcon.appiconset</string>
+    <key>CFBundleLocalizations</key>
+    <array>
+        <string>ru-RU</string>
+    </array>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>en</string>
 </dict>
 </plist>

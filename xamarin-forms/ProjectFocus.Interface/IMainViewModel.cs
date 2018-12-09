@@ -8,5 +8,7 @@ namespace ProjectFocus.Interface
         // -> an observable collection of features
         // in real implementation
         ICommand ProblemCommand { get; }
+
+        void StartPresentation();
     }
 }

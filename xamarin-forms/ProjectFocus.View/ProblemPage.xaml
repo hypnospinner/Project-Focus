@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:ProjectFocus"
+             x:Class="ProjectFocus.View.ProblemPage"
+             xmlns:local="clr-namespace:ProjectFocus.View"
              xmlns:design="clr-namespace:ProjectFocus.ViewModel.Mock;assembly=ProjectFocus.ViewModel.Mock"
-             x:Class="ProjectFocus.ProblemPage"
              Title="Problem">
     <ContentPage.Behaviors>
-      <local:DesignBindingBehavior ObjectType="{x:Type design:ProblemViewModel}"/>
+        <local:DesignBindingBehavior ObjectType="{x:Type design:ProblemViewModel}"/>
     </ContentPage.Behaviors>
     <ContentPage.Content>
         <StackLayout>

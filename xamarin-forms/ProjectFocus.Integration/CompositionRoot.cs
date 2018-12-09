@@ -1,18 +1,14 @@
 ﻿using Autofac;
 using ProjectFocus.Interface;
 using ProjectFocus.Service;
+using ProjectFocus.View;
 using ProjectFocus.ViewModel;
 using System;
 using Xamarin.Forms;
 
-namespace ProjectFocus
+namespace ProjectFocus.Integration
 {
-    /// <summary>
-    /// This class serves to register all the injected dependencies
-    /// an resolve the only instance to be ever resolved manually which
-    /// is the main view model of the application.
-    /// </summary>
-    public class AppComposer
+    public class CompositionRoot
     {
         public IMainViewModel Compose(NavigationPage navigation)
         {
@@ -44,7 +40,17 @@ namespace ProjectFocus
 
             var container = builder.Build();
 
-            // [Think][ToDo] Do we really have to resolve this one manually?
+            // This here is platform-specific localization integration code
+            if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
+            {
+                var localeManager = DependencyService.Get<ILocaleManager>();
+                var cultureInfo = localeManager.GetCurrentCultureInfo();
+                // set the RESX for resource localization
+                AppResources.Culture = cultureInfo;
+                // set the Thread for locale-aware methods
+                localeManager.SetLocale(cultureInfo);
+            }
+
             return container.Resolve<IMainViewModel>();
         }
     }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace ProjectFocus
+namespace ProjectFocus.View
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ProblemPage : ContentPage

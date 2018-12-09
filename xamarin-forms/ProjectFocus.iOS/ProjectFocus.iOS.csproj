@@ -90,6 +90,7 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="LocaleManager.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <None Include="Entitlements.plist" />
@@ -152,6 +153,14 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\ProjectFocus.Interface\ProjectFocus.Interface.csproj">
+      <Project>{55A29405-45C5-490E-AE58-53F705D60093}</Project>
+      <Name>ProjectFocus.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProjectFocus.View\ProjectFocus.View.csproj">
+      <Project>{148fb6d1-f610-43ce-98a0-75eafe061639}</Project>
+      <Name>ProjectFocus.View</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ProjectFocus\ProjectFocus.csproj">
       <Project>{7F2C508E-068E-44AF-B244-7BF4BDEFB0DC}</Project>
       <Name>ProjectFocus</Name>

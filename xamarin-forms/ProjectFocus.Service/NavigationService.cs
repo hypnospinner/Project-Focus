@@ -6,34 +6,28 @@ namespace ProjectFocus.Service
 {
     public class NavigationService : INavigationService
     {
-        NavigationPage _navigation;
+        public NavigationPage Navigation { get; set; }
 
         // This is an automatic keyed resolution of all page types
         // brought to us by Autofac.
-        IIndex<string, ContentPage> _pageIndex;
-
-        public NavigationService(IIndex<string, ContentPage> pageIndex, NavigationPage navigation)
-        {
-            _pageIndex = pageIndex;
-            _navigation = navigation;
-        }
+        public IIndex<string, ContentPage> PageIndex { get; set; }
 
         public async void Navigate(PageKey target, object viewModel)
         {
-            var page = _pageIndex[target + "Page"];
+            var page = PageIndex[target + "Page"];
             page.BindingContext = viewModel;
             // [Engineering][ToDo] Animation support might be needed here in future.
-            await _navigation.PushAsync(page, false);
+            await Navigation.PushAsync(page, false);
         }
 
         public async void Back()
         {
-            await _navigation.PopAsync();
+            await Navigation.PopAsync();
         }
 
         public async void Home()
         {
-            await _navigation.PopToRootAsync();
+            await Navigation.PopToRootAsync();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
-
+using ProjectFocus.Integration;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -13,15 +13,16 @@ namespace ProjectFocus
         {
             InitializeComponent();
 
-            // The instantiation could be transferred to XAML
-            // code to solve this one in great style.
-            // [Exercise][ToDo] Find a way to solve this in pure XAML.
             var navigationPage = new NavigationPage();
             MainPage = navigationPage;
 
             if (DesignMode.IsDesignModeEnabled) return;
 
-            new AppComposer().Compose(navigationPage);
+            var mainViewModel = new CompositionRoot().Compose(navigationPage);
+
+            // View models are responsible for presentation logic.
+            // Main view model is the entry point of it.
+            mainViewModel.StartPresentation();
         }
 
         protected override void OnStart()
