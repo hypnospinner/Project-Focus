@@ -3,6 +3,9 @@ namespace ProjectFocus.Backend.Api.Controllers
 open Microsoft.AspNetCore.Mvc
 open RawRabbit
 open ProjectFocus.Backend.Common.Command
+open Microsoft.AspNetCore.Mvc
+open Microsoft.AspNetCore.Authentication.JwtBearer
+open Microsoft.AspNetCore.Authorization
 
 [<Route("[controller]")>]
 [<ApiController>]
@@ -21,3 +24,8 @@ type ProblemsController private () =
     member this.Post([<FromBody>] command: AuthenticatedCommand) =
         this.BusClient.PublishAsync (command) |> ignore
         AcceptedResult()
+
+    [<HttpGet("")>]
+    [<AuthorizeAttribute(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)>]
+    member this.Get () =
+        ActionResult<string>("Secured")

@@ -1,25 +1,43 @@
 namespace ProjectFocus.Backend.Service.Identity
 
-open System
-open System.Collections.Generic
-open System.IO
-open System.Linq
-open System.Threading.Tasks
-open Microsoft.AspNetCore
 open Microsoft.AspNetCore.Hosting
-open Microsoft.Extensions.Configuration
-open Microsoft.Extensions.Logging
+open ProjectFocus.Backend.Common
+open ProjectFocus.Backend.Common.Command
+open ProjectFocus.Backend.Common.Event
 
 module Program =
     let exitCode = 0
 
-    let CreateWebHostBuilder args =
-        WebHost
-            .CreateDefaultBuilder(args)
-            .UseStartup<Startup>();
+    //[ToDo] Move to config
+    let saltLength = 40
+    let encryptionIterations = 10000
+
+    let private handleCommand (host: IWebHost) (command: CreateUser) =
+        async{
+                printfn "A command %s has been received" (command.ToString());
+
+                let db = host |> Host.db
+
+                let addUser = UserService.addAsync (db |> UserRepository.existsWithEmailAsync)
+                                                   (db |> UserRepository.addAsync)
+                                                   (saltLength |> Encryption.getSalt)
+                                                   (encryptionIterations |> Encryption.getPasswordHash)
+
+                let hndUserAdd =  ((addUser),
+                                   (host
+                                        |> Host.bus
+                                        |> Bus.publishAsync<UnrestrictedEvent>))
+                                  ||> Handler.createUser
+
+                do! hndUserAdd (CreateUser command)
+        }
 
     [<EntryPoint>]
     let main args =
-        CreateWebHostBuilder(args).Build().Run()
+        let runHost = Host.build<Startup>
+                      >> Host.subscribe<CreateUser> Host.bus handleCommand
+                      >> Host.run
+        
+        runHost args
 
         exitCode

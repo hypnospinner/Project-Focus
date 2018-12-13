@@ -9,6 +9,8 @@ open RawRabbit.Operations.Subscribe.Context
 open System.Reflection
 open Microsoft.Extensions.DependencyInjection
 open MongoDB.Driver
+open Auth
+open System
 
 
 module Host =
@@ -42,6 +44,10 @@ module Host =
         // from any other function in this module. It's to be passed as parameter.
         let busClient = host.Services.GetService<IBusClient>();
         busClient
+
+    let getJwt (host: IWebHost) =
+        let jwtFunc = host.Services.GetService<Guid -> JsonWebToken>();
+        jwtFunc
 
     let private asTask<'T> handle =
         let doHandleTask (cmd: 'T) = 

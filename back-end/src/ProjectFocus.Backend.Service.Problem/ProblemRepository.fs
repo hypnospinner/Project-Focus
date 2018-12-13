@@ -13,16 +13,6 @@ type MongoCollection = IMongoCollectionExtensions
 // In this case, the type is Problem.
 module ProblemRepository =
 
-    let private equals (guid2: Guid) (guid1: Guid) =
-        (guid1.ToByteArray(), guid2.ToByteArray())
-            |> function
-               | a1, a2 -> BitConverter.ToInt64 (a1, 0),
-                           BitConverter.ToInt64 (a1, 8),
-                           BitConverter.ToInt64 (a2, 0),
-                           BitConverter.ToInt64 (a2, 8)
-            |> function
-               | l1p1, l1p2, l2p1, l2p2 -> (l1p1 = l2p1) && (l1p2 = l2p2)
-
     let private getCollection (db: IMongoDatabase) =
         db.GetCollection<Problem>("Problem")
     
@@ -31,7 +21,7 @@ module ProblemRepository =
             return! db
                  |> getCollection
                  |> MongoCollection.AsQueryable
-                 |> fun q -> q.FirstOrDefaultAsync (fun x -> x.Id |> equals id)
+                 |> fun q -> q.FirstOrDefaultAsync (fun x -> x.Id = id)
                  |> Async.AwaitTask
         }
     let addAsync (db: IMongoDatabase) (problem: Problem) =

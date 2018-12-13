@@ -13,6 +13,8 @@ open MongoDB.Driver
 open Microsoft.Extensions.Options
 open MongoDB.Bson.Serialization.Conventions
 open MongoDB.Bson
+open System.IdentityModel.Tokens.Jwt
+open Auth
 
 
 module Service =
@@ -75,3 +77,30 @@ module Service =
            ))
         |> ignore
         ConventionRegistry.Register("ProjectFocusConventions", MongoConventions(), fun _ -> true)
+
+    type JwtOptions () =
+            member val SecretKey = String.Empty with get, set
+            member val ExpiryMinutes = 5L with get, set
+            member val Issuer = String.Empty with get, set
+
+    let addJwt (configuration: IConfiguration) (services: IServiceCollection) =
+        let options = new JwtOptions()
+        let section = configuration.GetSection("jwt")
+        section.Bind options
+        do services.Configure<JwtOptions> section |> ignore
+
+        let tokenHandler = new JwtSecurityTokenHandler()
+        let key = Auth.signingKey options.SecretKey
+        let header = Auth.tokenHeader key
+
+        services.AddSingleton<Guid -> JsonWebToken> (Auth.token tokenHandler header options.ExpiryMinutes options.Issuer) |> ignore
+
+        let tokenValidationParameters = Auth.validationParams options.Issuer
+        services.AddAuthentication()
+                .AddJwtBearer(fun cfg ->
+                (
+                    cfg.RequireHttpsMetadata <- false
+                    cfg.SaveToken <- true
+                    cfg.TokenValidationParameters <- Auth.validationParams options.Issuer key
+                )) |> ignore
+        ()

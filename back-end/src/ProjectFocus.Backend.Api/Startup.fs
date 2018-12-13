@@ -17,6 +17,7 @@ type Startup private () =
     member this.ConfigureServices(services: IServiceCollection) =
         // Add framework services.
         services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1) |> ignore
+        services |> Service.addJwt this.Configuration
         services |> Service.addRabbitMq this.Configuration 
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
