@@ -2,8 +2,9 @@ namespace ProjectFocus.Backend.Common
 
 open System
 open System.IdentityModel.Tokens.Jwt
-open Microsoft.IdentityModel.Tokens
 open System.Text
+
+open Microsoft.IdentityModel.Tokens
 
 module Auth =
 
@@ -50,6 +51,3 @@ module Auth =
         parameters.ValidIssuer <- issuer
         parameters.IssuerSigningKey <- signingKey
         parameters
-
-    
-    //let createToken (userId: Guid) =
