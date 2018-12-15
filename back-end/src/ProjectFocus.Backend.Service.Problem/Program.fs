@@ -1,9 +1,6 @@
 namespace ProjectFocus.Backend.Service.Problem
 
-open Microsoft.AspNetCore.Hosting
 open ProjectFocus.Backend.Common
-open ProjectFocus.Backend.Common.Command
-open ProjectFocus.Backend.Common.Event
 
 module Program =
     let exitCode = 0

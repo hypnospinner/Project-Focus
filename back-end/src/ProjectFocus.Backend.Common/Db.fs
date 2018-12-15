@@ -12,7 +12,7 @@ open MongoDB.Driver
 
 module Db =
 
-    type private MongoOptions () =
+    type MongoOptions () =
             member val ConnectionString = String.Empty with get, set
             member val Database = String.Empty with get, set
 

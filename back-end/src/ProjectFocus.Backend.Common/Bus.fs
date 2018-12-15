@@ -15,7 +15,7 @@ open RawRabbit.Serialization
 
 module Bus =
 
-    type private RabbitMqOptions () = inherit RawRabbitConfiguration()
+    type RabbitMqOptions () = inherit RawRabbitConfiguration()
 
     type private NewtonsoftSerializer () =
 

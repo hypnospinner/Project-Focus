@@ -55,7 +55,7 @@ module Auth =
         parameters
 
 
-    type private JwtOptions () =
+    type JwtOptions () =
             member val SecretKey = String.Empty with get, set
             member val ExpiryMinutes = 5L with get, set
             member val Issuer = String.Empty with get, set

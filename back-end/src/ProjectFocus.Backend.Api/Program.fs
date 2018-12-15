@@ -1,8 +1,6 @@
 namespace ProjectFocus.Backend.Api
 
-open Microsoft.AspNetCore.Hosting
 open ProjectFocus.Backend.Common
-open ProjectFocus.Backend.Common.Event
 
 module Program =
     let exitCode = 0
