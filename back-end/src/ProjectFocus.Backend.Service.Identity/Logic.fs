@@ -1,27 +1,40 @@
 namespace ProjectFocus.Backend.Service.Identity
 
 open System
-open Domain
-open Data
 
 open ProjectFocus.Backend.Common.Auth
 
-module UserService =
+open Data
+open Encryption
 
-    let getAsync (getUserByEmail: string -> Async<User>) (email: string) =
+module Logic =
+
+    type NewUserParams =
+        {
+            Name: string;
+            Email: string;
+            Password: string;
+        }
+
+    type LoginUserParams =
+        {
+            Email: string;
+            Password: string;
+        }
+    let userGetAsync (getUserByEmail: string -> Async<User>) (email: string) =
         async {
             let! user = getUserByEmail (email.ToLowerInvariant())
             return if user.Id = Guid.Empty then None else Some user
         }
 
-    let addAsync (existsUserWithEmail: string -> Async<bool>)
-                 (addUser: User -> Async<unit>)
+    let userAddAsync (userExistsWithEmail: string -> Async<bool>)
+                 (userAdd: User -> Async<unit>)
                  (getSalt: unit -> byte[])
                  (getHash: EncryptionParams -> byte[])
                  (parameters: NewUserParams) =
         async {
             let email = parameters.Email.ToLowerInvariant()
-            let! exists = existsUserWithEmail email
+            let! exists = userExistsWithEmail email
 
             //[ToDo] Add exceptions handling logic
             if exists then failwith "User already exists"
@@ -32,26 +45,26 @@ module UserService =
                     Name = parameters.Name;
                     Email = email;
                     Password = {
-                        Password = parameters.Password;
+                        ClearText = parameters.Password;
                         Salt = salt
                     } |> getHash |> Convert.ToBase64String;
                     Salt = salt |> Convert.ToBase64String;
                     CreatedAt = DateTime.UtcNow;
                 }
-            do! addUser user
+            do! userAdd user
         }
 
-    let loginAsync  (getUserByEmail: string -> Async<User>)
+    let userLoginAsync  (userGetByEmail: string -> Async<User>)
                     (getHash: EncryptionParams -> byte[])
                     (getJwt: Guid -> JsonWebToken)
                     (parameters: LoginUserParams) =
         async {
             let email = parameters.Email.ToLowerInvariant()
-            let! user = getUserByEmail email
+            let! user = userGetByEmail email
             return if user.Id = Guid.Empty
                    then None 
                    else if {
-                               Password = parameters.Password;
+                               ClearText = parameters.Password;
                                Salt = user.Salt |> Convert.FromBase64String
                            } |> getHash
                              |> Convert.ToBase64String = user.Password

@@ -1,4 +1,4 @@
-namespace ProjectFocus.Backend.Service.Identity
+namespace ProjectFocus.Backend.Service.Problem
 
 open Giraffe
 
@@ -9,7 +9,7 @@ module WebApp =
             subRoute "/account"
                 (choose [
                     POST >=> choose [
-                        route "/login" >=> WebHandler.handleLogin
+                        route "/login" >=> WebHandler.handlePing
                     ]
                 ])
             setStatusCode 404 >=> text "Not Found" ]

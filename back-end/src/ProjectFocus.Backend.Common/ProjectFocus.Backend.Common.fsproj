@@ -8,9 +8,12 @@
     <Compile Include="Command.fs" />
     <Compile Include="Event.fs" />
     <Compile Include="Auth.fs" />
-    <Compile Include="Service.fs" />
+    <Compile Include="Db.fs" />
     <Compile Include="Host.fs" />
+    <Compile Include="IBusSubscriber.fs" />
     <Compile Include="Bus.fs" />
+    <Compile Include="BusSubscriber.fs" />
+    <Compile Include="AppBuilder.fs" />
   </ItemGroup>
 
   <ItemGroup>

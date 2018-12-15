@@ -1,4 +1,4 @@
-namespace ProjectFocus.Backend.Service.Identity
+namespace ProjectFocus.Backend.Api
 
 open Giraffe
 
@@ -6,10 +6,11 @@ module WebApp =
 
     let api () =
         choose [
-            subRoute "/account"
+            subRoute "/api"
                 (choose [
                     POST >=> choose [
-                        route "/login" >=> WebHandler.handleLogin
+                        route "/problems" >=> WebHandler.handleCreateProblem
+                        route "/users" >=> WebHandler.handleCreateUser
                     ]
                 ])
             setStatusCode 404 >=> text "Not Found" ]
