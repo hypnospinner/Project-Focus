@@ -1,6 +1,7 @@
 namespace ProjectFocus.Backend.Service.Identity
 
 open Giraffe
+open ProjectFocus.Backend.Common
 
 module WebApp =
 
@@ -10,6 +11,7 @@ module WebApp =
                 (choose [
                     POST >=> choose [
                         route "/login" >=> WebHandler.handleLogin
+                        route "/try" >=> Auth.authorize >=> text "Success!"
                     ]
                 ])
             setStatusCode 404 >=> text "Not Found" ]

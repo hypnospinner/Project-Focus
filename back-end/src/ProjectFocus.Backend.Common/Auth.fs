@@ -4,9 +4,12 @@ open System
 open System.IdentityModel.Tokens.Jwt
 open System.Text
 
+open Microsoft.AspNetCore.Authentication.JwtBearer
 open Microsoft.IdentityModel.Tokens
 open Microsoft.Extensions.Configuration
 open Microsoft.Extensions.DependencyInjection
+
+open Giraffe
 
 module Auth =
 
@@ -15,6 +18,9 @@ module Auth =
             Token: string;
             Expires: int64;
         }
+
+    let authorize httpFunc =
+        requiresAuthentication (challenge JwtBearerDefaults.AuthenticationScheme) httpFunc
 
     let private getSigningKey (secret: string) =
         new SymmetricSecurityKey(secret |> Encoding.UTF8.GetBytes) :> SecurityKey
@@ -73,7 +79,7 @@ module Auth =
         services.AddSingleton<Guid -> JsonWebToken> (getToken tokenHandler header options.ExpiryMinutes options.Issuer) |> ignore
 
         let tokenValidationParameters = getValidationParams options.Issuer
-        services.AddAuthentication()
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(fun cfg ->
                 (
                     cfg.RequireHttpsMetadata <- false

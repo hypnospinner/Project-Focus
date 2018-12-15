@@ -30,6 +30,7 @@ type Startup private () =
 
         
         //app.UseHttpsRedirection() |> ignore
+        app.UseAuthentication() |> ignore
         app.UseGiraffe (WebApp.api())
         app.UseMessageQueue (Bus.subscribe)
 
