@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Result.fs" />
+    <Compile Include="WebApp.fs" />
     <Compile Include="Command.fs" />
     <Compile Include="Event.fs" />
     <Compile Include="Auth.fs" />

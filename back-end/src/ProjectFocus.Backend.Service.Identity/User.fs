@@ -12,7 +12,7 @@ module User =
         Logic.userAddAsync (provider |> Db.get |> Data.userExistsWithEmailAsync)
                            (provider |> Db.get |> Data.userAddAsync)
                            (Encryption.defaultSaltLength |> Encryption.getSalt)
-                           (Encryption.defaultDerivedCount |> Encryption.getPasswordHash)
+                           (Encryption.defaultDerivedCount |> Encryption.getHash)
                            (parameters)
 
     let publishAddedAsync (provider: IServiceProvider) (event: UserCreated) =
@@ -20,6 +20,6 @@ module User =
 
     let loginAsync (provider: IServiceProvider) (parameters: LoginUserParams) =
         Logic.userLoginAsync (provider |> Db.get |> Data.userGetByEmailAsync)
-                             (Encryption.defaultDerivedCount |> Encryption.getPasswordHash)
+                             (Encryption.defaultDerivedCount |> Encryption.getHash)
                              (provider |> Auth.getJwt)
                              (parameters)

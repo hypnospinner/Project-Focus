@@ -26,6 +26,7 @@ type Startup private () =
         else
             app.UseHsts() |> ignore
 
+        app.UseAuthentication() |> ignore
         app.UseGiraffe (WebApp.api())
         app.UseMessageQueue (Bus.subscribe)
 
