@@ -1,15 +1,12 @@
 namespace ProjectFocus.Backend.Service.Identity
 
-open System
-open System.Collections.Generic
-open System.Linq
-open System.Threading.Tasks
+open Giraffe
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Hosting
-open Microsoft.AspNetCore.HttpsPolicy;
-open Microsoft.AspNetCore.Mvc
 open Microsoft.Extensions.Configuration
 open Microsoft.Extensions.DependencyInjection
+open ProjectFocus.Backend.Common
+open ProjectFocus.Backend.Common.AppBuilder
 
 type Startup private () =
     new (configuration: IConfiguration) as this =
@@ -18,8 +15,11 @@ type Startup private () =
 
     // This method gets called by the runtime. Use this method to add services to the container.
     member this.ConfigureServices(services: IServiceCollection) =
-        // Add framework services.
-        services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1) |> ignore
+        services.AddGiraffe() |> ignore
+        services |> Auth.add this.Configuration
+        services |> Bus.add this.Configuration
+        services |> Db.add this.Configuration
+
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     member this.Configure(app: IApplicationBuilder, env: IHostingEnvironment) =
@@ -28,7 +28,10 @@ type Startup private () =
         else
             app.UseHsts() |> ignore
 
-        app.UseHttpsRedirection() |> ignore
-        app.UseMvc() |> ignore
+        
+        //app.UseHttpsRedirection() |> ignore
+        app.UseAuthentication() |> ignore
+        app.UseGiraffe (WebApp.api())
+        app.UseMessageQueue (Bus.subscribe)
 
     member val Configuration : IConfiguration = null with get, set

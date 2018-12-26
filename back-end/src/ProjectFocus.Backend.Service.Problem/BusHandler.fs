@@ -1,31 +1,25 @@
 namespace ProjectFocus.Backend.Service.Problem
 
 open System
-open Domain
+
 open ProjectFocus.Backend.Common.Command
 open ProjectFocus.Backend.Common.Event
 
-// Handlers deal with events and commands.
-// They call service functions and bus publishing functions.
-module Handler =
+module BusHandler =
 
-    let createProblem (storeProblem: Problem -> Async<unit>)
-                      (publishEvent: AuthenticatedEvent -> Async<unit>)
-                      (command: AuthenticatedCommand) =
+     let handleAuthenticatedCommand (provider: IServiceProvider) (command: AuthenticatedCommand) =
+        printfn "A command %s has been received" (command.ToString());
         command.Command
         |> function
            | CreateProblem c -> async {
-                                let problem = {
-                                        Id = Guid.NewGuid();
+                                let! problem = Problem.addAsync (provider)  {
                                         UserId = command.UserId;
-                                        CreatedAt = DateTime.UtcNow;
                                         Name = c.Name;
                                         Description = c.Description;
                                         Content = c.Content 
                                     }
-                                do! storeProblem problem
 
-                                let event = {
+                                do! Problem.publishAddedAsync (provider)  {
                                         UserId = problem.UserId;
                                         Event = ProblemCreated {
                                             Id = problem.Id;
@@ -35,11 +29,4 @@ module Handler =
                                             Content = problem.Content 
                                         }
                                     }
-                                do! publishEvent event
                             }
-            // In future we can use a rejected event for
-                // faulty situations.
-                //     | _ -> RejectedEvent {
-                //                 Code ="1";
-                //                 Command = AuthenticatedCommand command;
-                //                 Reason = "Unknown command." }

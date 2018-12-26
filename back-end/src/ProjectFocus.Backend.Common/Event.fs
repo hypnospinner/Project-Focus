@@ -1,6 +1,7 @@
 namespace ProjectFocus.Backend.Common
 
 open System
+
 open Command
 
 module Event =
