@@ -18,11 +18,7 @@ namespace ProjectFocus
 
             if (DesignMode.IsDesignModeEnabled) return;
 
-            var mainViewModel = new CompositionRoot().Compose(navigationPage);
-
-            // View models are responsible for presentation logic.
-            // Main view model is the entry point of it.
-            mainViewModel.StartPresentation();
+            new CompositionRoot().ComposeAndRunApplication(navigationPage);
         }
 
         protected override void OnStart()

@@ -4,11 +4,17 @@
              xmlns:local="clr-namespace:ProjectFocus.View"
              x:Class="ProjectFocus.View.MainPage"
              Title="{local:Translate MainViewTitle}">
-    <StackLayout>
-        <!-- Place new controls here -->
-        <Button Text="Problem" 
+    <ContentPage.Behaviors>
+        <local:NavigateToPageBehavior PageType="{x:Type local:ProblemPage}"
+                                      Notification="{Binding ProceedToCreateProblem}"/>
+    </ContentPage.Behaviors>
+    <ContentPage.Content>
+        <StackLayout>
+            <!-- Place new controls here -->
+            <Button Text="Problem" 
                 Command="{Binding ProblemCommand}"
                 HorizontalOptions="Center"
                 VerticalOptions="CenterAndExpand"/>
-    </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>

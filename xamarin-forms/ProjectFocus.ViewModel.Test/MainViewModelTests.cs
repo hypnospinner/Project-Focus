@@ -10,27 +10,18 @@ namespace ProjectFocus.ViewModel.Test
         public void NavigationTest()
         {
             var mockProblemViewModel = new Mock<IProblemViewModel>();
-            var mockNavigationService = new Mock<INavigationService>();
+            var mockNotification = new Mock<INotification>();
             var sut = new MainViewModel();
             // Property injection
-            sut.NavigationService = mockNavigationService.Object;
             sut.GetProblemViewModel = () => mockProblemViewModel.Object;
-
-            // Start presentation
-            sut.StartPresentation();
-
-            // Verify MainPage navigation with MainViewModel on creation
-            mockNavigationService.Verify(x => x.Navigate(
-                It.Is<PageKey>(k => k == PageKey.Main),
-                It.Is<object>(vm => vm == sut)), Times.Exactly(1));
+            sut.ProceedToCreateProblem = mockNotification.Object;
 
             // Problem command called from MainPage
             sut.ProblemCommand.Execute(null);
 
             // Verify ProblemPage navigation on command with the proper IProblemViewModel
-            mockNavigationService.Verify(x => x.Navigate(
-                It.Is<PageKey>(k => k == PageKey.Problem),
-                It.Is<object>(vm => vm == mockProblemViewModel.Object)), Times.Exactly(1));
+            mockNotification.Verify(x => x.Publish(
+                   It.Is<object>(o => o == mockProblemViewModel.Object)), Times.Exactly(1));
         }
     }
 }

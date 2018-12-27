@@ -7,6 +7,6 @@ namespace ProjectFocus.ViewModel.Mock
     {
         public ICommand ProblemCommand { get; }
 
-        public void StartPresentation() { }
+        public INotification ProceedToCreateProblem { get; }
     }
 }

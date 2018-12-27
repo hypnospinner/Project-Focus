@@ -9,6 +9,6 @@ namespace ProjectFocus.Interface
         // in real implementation
         ICommand ProblemCommand { get; }
 
-        void StartPresentation();
+        INotification ProceedToCreateProblem { get; }
     }
 }

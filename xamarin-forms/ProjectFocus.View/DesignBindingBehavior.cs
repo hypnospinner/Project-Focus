@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Xamarin.Forms;
 
 namespace ProjectFocus.View
@@ -56,7 +54,7 @@ namespace ProjectFocus.View
         private static void InstantiateAndBind(Type contextType, ContentPage bindable)
         {
             if (bindable == null || contextType == null) return;
-
+           
             var contextInstance = Activator.CreateInstance(contextType);
             bindable.BindingContext = contextInstance;
         }
