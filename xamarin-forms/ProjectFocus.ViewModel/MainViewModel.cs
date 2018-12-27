@@ -12,7 +12,7 @@ namespace ProjectFocus.ViewModel
         // This is an automatic view-model-producing factory method
         // brought to us by Autofac.
         public Func<IProblemViewModel> GetProblemViewModel { get; set; }
-
+    
         public void StartPresentation()
         {
             NavigationService.Navigate(PageKey.Main, this);
