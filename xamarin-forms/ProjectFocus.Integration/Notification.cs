@@ -1,5 +1,6 @@
 ﻿using ProjectFocus.Interface;
 using System;
+using System.Collections.Generic;
 
 namespace ProjectFocus.Integration
 {
@@ -7,14 +8,25 @@ namespace ProjectFocus.Integration
     {
         public void Publish(object parameter)
         {
-            action(parameter);
+            foreach (var handler in subscriptions.Values)
+            {
+                handler(parameter);
+            }
         }
 
-        public void Subscribe(Action<object> handler)
+        public Guid Subscribe(Action<object> handler)
         {
-            action = handler;
+            var subscriptionId = Guid.NewGuid();
+            subscriptions[subscriptionId] = handler;
+            return subscriptionId;
         }
 
-        private Action<object> action;
+        public void Unsubscribe(Guid subscriptionId)
+        {
+            subscriptions.Remove(subscriptionId);
+        }
+
+        private Dictionary<Guid, Action<object>> subscriptions
+            = new Dictionary<Guid, Action<object>>();
     }
 }

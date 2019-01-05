@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ProjectFocus.Interface
 {
     public interface INotification
     {
-        void Subscribe(Action<object> handler);
+        Guid Subscribe(Action<object> handler);
+
+        void Unsubscribe(Guid subscriptionId);
 
         void Publish(object parameter);
     }

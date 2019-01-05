@@ -1,6 +1,7 @@
-﻿using ProjectFocus.Interface;
-using System;
+﻿using System;
 using Xamarin.Forms;
+
+using ProjectFocus.Interface;
 
 namespace ProjectFocus.View
 {
@@ -24,28 +25,40 @@ namespace ProjectFocus.View
             set { SetValue(NotificationProperty, value); }
         }
 
+        private Guid subscriptionId;
+
+        public void Unsubscribe(INotification notification)
+        {
+            if (notification == null)
+                return;
+
+            notification.Unsubscribe(subscriptionId);
+        }
+
+        public void Subscribe(INotification notification)
+        {
+            if (notification == null)
+                return;
+
+            subscriptionId = notification.Subscribe(viewModel =>
+            {
+                var page = (ContentPage)Activator.CreateInstance(PageType);
+                page.BindingContext = viewModel;
+                AssociatedObject.Navigation.PushAsync(page);
+            });
+        }
+
         protected override void OnDetachingFrom(BindableObject bindable)
         {
-            Notification.Subscribe(null);
+            Unsubscribe(Notification);
             base.OnDetachingFrom(bindable);
         }
 
         private static void OnNotificationChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if(oldValue != null)
-            {
-                ((INotification)oldValue).Subscribe(null);
-            }
-
-            var notification = (INotification)newValue;
-            notification.Subscribe(viewModel =>
-            {
-                var behavior = (NavigateToPageBehavior)bindable;
-                var pageType = behavior.PageType;
-                var page = (ContentPage)Activator.CreateInstance(pageType);
-                page.BindingContext = viewModel;
-                behavior.AssociatedObject.Navigation.PushAsync(page);
-            });
+            var behavior = (NavigateToPageBehavior)bindable;
+            behavior.Unsubscribe((INotification)oldValue);
+            behavior.Subscribe((INotification)newValue);
         }
     }
 }

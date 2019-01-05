@@ -13,8 +13,8 @@ namespace ProjectFocus.ViewModel.Test
             var mockNotification = new Mock<INotification>();
             var sut = new MainViewModel();
             // Property injection
-            sut.GetProblemViewModel = () => mockProblemViewModel.Object;
-            sut.ProceedToCreateProblem = mockNotification.Object;
+            sut.GetProblemViewModel = () => mockProblemViewModel.Object; // Stub
+            sut.ProceedToCreateProblem = mockNotification.Object; // Mock
 
             // Problem command called from MainPage
             sut.ProblemCommand.Execute(null);
