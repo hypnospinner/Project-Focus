@@ -17,8 +17,5 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ProjectFocus.Integration\ProjectFocus.Integration.csproj" />
-    <ProjectReference Include="..\ProjectFocus.Service\ProjectFocus.Service.csproj" />
-    <ProjectReference Include="..\ProjectFocus.ViewModel.Mock\ProjectFocus.ViewModel.Mock.csproj" />
-    <ProjectReference Include="..\ProjectFocus.ViewModel\ProjectFocus.ViewModel.csproj" />
   </ItemGroup>
 </Project>

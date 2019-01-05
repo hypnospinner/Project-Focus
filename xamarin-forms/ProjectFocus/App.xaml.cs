@@ -13,12 +13,9 @@ namespace ProjectFocus
         {
             InitializeComponent();
 
-            var navigationPage = new NavigationPage();
-            MainPage = navigationPage;
-
             if (DesignMode.IsDesignModeEnabled) return;
 
-            new CompositionRoot().ComposeAndRunApplication(navigationPage);
+            new CompositionRoot().RunApplication(this);
         }
 
         protected override void OnStart()

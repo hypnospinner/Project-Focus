@@ -10,7 +10,7 @@ namespace ProjectFocus.Integration
 {
     public class CompositionRoot
     {
-        public void ComposeAndRunApplication(NavigationPage navigation)
+        public void RunApplication(Application app)
         {
             var builder = new ContainerBuilder();
 
@@ -37,9 +37,6 @@ namespace ProjectFocus.Integration
 
             builder.RegisterType<Notification>().AsImplementedInterfaces();
 
-            builder.RegisterInstance(navigation)
-                   .As<NavigationPage>();
-
             var container = builder.Build();
 
             // This here is platform-specific localization integration code
@@ -54,9 +51,8 @@ namespace ProjectFocus.Integration
             }
 
             var mainViewModel = container.Resolve<IMainViewModel>();
-            var page = new MainPage();
-            page.BindingContext = mainViewModel;
-            navigation.PushAsync(page);
+            var navigationPage = new NavigationPage(new MainPage() { BindingContext = mainViewModel });
+            app.MainPage = navigationPage;
         }
     }
 }
