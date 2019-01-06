@@ -5,7 +5,7 @@ using ProjectFocus.Interface;
 
 namespace ProjectFocus.View
 {
-    public class NavigateToPageBehavior : BehaviorBase<ContentPage>
+    public class NavigateToPageBehavior : BehaviorBase<ContentView>
     {
         public static readonly BindableProperty PageTypeProperty =
             BindableProperty.CreateAttached("PageType", typeof(Type), typeof(NavigateToPageBehavior), null);

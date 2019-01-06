@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView  xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ProjectFocus.View"
+             x:Class="ProjectFocus.View.NewProblemFeatureView">
+    <ContentView.Behaviors>
+        <local:NavigateToPageBehavior PageType="{x:Type local:ProblemPage}"
+                                    Notification="{Binding ProceedToCreateProblem}"/>
+    </ContentView.Behaviors>
+    <ContentView.Content>
+        <StackLayout>
+            <Button Text="Problem" 
+                   Command="{Binding ProblemCommand}"
+                   HorizontalOptions="Center"
+                   VerticalOptions="CenterAndExpand"/>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

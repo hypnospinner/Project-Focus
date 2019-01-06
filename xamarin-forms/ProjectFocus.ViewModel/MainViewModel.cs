@@ -1,29 +1,25 @@
 ﻿using ProjectFocus.Interface;
 using System;
-using System.Windows.Input;
-using Xamarin.Forms;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ProjectFocus.ViewModel
 {
     public class MainViewModel : ViewModelBase, IMainViewModel
     {
-        public INotification ProceedToCreateProblem { get; set; }
+        public IFeatureProvider FeatureProvider {get;set;}
+        public IUserService UserService { get; set; }
 
-        // This is an automatic view-model-producing factory method
-        // brought to us by Autofac.
-        public Func<IProblemViewModel> GetProblemViewModel { get; set; }
-
-        private ICommand _problemCommand;
-        public ICommand ProblemCommand
+        private IEnumerable<IViewModelFeature> features;
+        public IEnumerable<IViewModelFeature> Features
         {
             get
             {
-                if(_problemCommand == null)
-                {
-                    _problemCommand = new Command(() =>
-                        ProceedToCreateProblem.Publish(GetProblemViewModel()));
-                }
-                return _problemCommand;
+                if (features == null)
+                    features = FeatureProvider.GetEnabledFeatures(FeatureScope.MainSelection,
+                                          UserService.GetEnabledFeatureKeys(FeatureScope.MainSelection))
+                              .Select(getFeature => getFeature());
+                return features;
             }
         }
     }

@@ -2,19 +2,14 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ProjectFocus.View"
+             xmlns:ai="clr-namespace:AiForms.Layouts;assembly=AiForms.Layouts"
              x:Class="ProjectFocus.View.MainPage"
              Title="{local:Translate MainViewTitle}">
-    <ContentPage.Behaviors>
-        <local:NavigateToPageBehavior PageType="{x:Type local:ProblemPage}"
-                                      Notification="{Binding ProceedToCreateProblem}"/>
-    </ContentPage.Behaviors>
-    <ContentPage.Content>
-        <StackLayout>
-            <!-- Place new controls here -->
-            <Button Text="Problem" 
-                Command="{Binding ProblemCommand}"
-                HorizontalOptions="Center"
-                VerticalOptions="CenterAndExpand"/>
-        </StackLayout>
-    </ContentPage.Content>
+    <ScrollView VerticalOptions="Center">
+        <ai:RepeatableStack ItemsSource="{Binding Features}">
+            <ai:RepeatableStack.ItemTemplate>
+                <local:FeatureTemplateSelector/>
+            </ai:RepeatableStack.ItemTemplate>
+        </ai:RepeatableStack>
+    </ScrollView>
 </ContentPage>
