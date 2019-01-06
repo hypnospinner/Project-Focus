@@ -5,7 +5,7 @@ using ProjectFocus.Interface;
 
 namespace ProjectFocus.ViewModel
 {
-    [FeatureScope(nameof(NewProblemFeature), FeatureScope.MainSelection)]
+    [FeatureMetadata(nameof(NewProblemFeature), FeatureScope.MainSelection)]
     public class NewProblemFeature : ViewModelBase, IViewModelFeature, INewProblemFeature
     {
         public ICommandFactory CommandFactory { get; set; }

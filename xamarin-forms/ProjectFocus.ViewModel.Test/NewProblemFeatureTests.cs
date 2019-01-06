@@ -12,9 +12,9 @@ namespace ProjectFocus.ViewModel.Test
         [Fact]
         public void NewProblemFeatureMetadataTest()
         {
-            var attributes = typeof(NewProblemFeature).GetCustomAttributes(typeof(FeatureScopeAttribute), true);
+            var attributes = typeof(NewProblemFeature).GetCustomAttributes(typeof(FeatureMetadataAttribute), true);
             Assert.Single(attributes);
-            var attribute = (FeatureScopeAttribute)attributes[0];
+            var attribute = (FeatureMetadataAttribute)attributes[0];
             Assert.Equal("NewProblemFeature", attribute.Name);
             Assert.Single(attribute.SupportedScopes);
             Assert.Equal(FeatureScope.MainSelection, attribute.SupportedScopes[0]);

@@ -3,16 +3,16 @@
 namespace ProjectFocus.Interface
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class FeatureScopeAttribute : Attribute
+    public class FeatureMetadataAttribute : Attribute
     {
         public string Name { get; set; }
 
         public FeatureScope[] SupportedScopes { get; set; }
 
-        public FeatureScopeAttribute()
+        public FeatureMetadataAttribute()
         { }
 
-        public FeatureScopeAttribute(string name, params FeatureScope[] supportedScopes)
+        public FeatureMetadataAttribute(string name, params FeatureScope[] supportedScopes)
         {
             Name = name;
             SupportedScopes = supportedScopes;

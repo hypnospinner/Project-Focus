@@ -10,7 +10,7 @@ namespace ProjectFocus.Integration
 {
     public class FeatureProvider : IFeatureProvider
     {
-        public Lazy<IEnumerable<Meta<Func<IViewModelFeature>, FeatureScopeAttribute>>> TaggedFeatureSources { get; set; }
+        public Lazy<IEnumerable<Meta<Func<IViewModelFeature>, FeatureMetadataAttribute>>> TaggedFeatureSources { get; set; }
 
         public FeatureProvider()
         {

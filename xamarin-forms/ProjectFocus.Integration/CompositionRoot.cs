@@ -33,7 +33,7 @@ namespace ProjectFocus.Integration
 
             builder.RegisterAssemblyTypes(viewModelAssembly)
                    .Where(t => t.Name.EndsWith("Feature", StringComparison.InvariantCultureIgnoreCase))
-                   .WithMetadataFrom<FeatureScopeAttribute>()
+                   .WithMetadataFrom<FeatureMetadataAttribute>()
                    .As<IViewModelFeature>()
                    .PropertiesAutowired();
 
