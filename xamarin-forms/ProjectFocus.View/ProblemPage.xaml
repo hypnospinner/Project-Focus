@@ -13,6 +13,9 @@
             <Label Text="{Binding Text}"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
+            <local:GradientPlanePicker HeightRequest="400"
+                                     XSelection="{Binding Importance, Mode=TwoWay}"
+                                     YSelection="{Binding Urgency, Mode=TwoWay}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
