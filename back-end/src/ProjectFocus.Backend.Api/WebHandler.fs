@@ -11,8 +11,8 @@ open ProjectFocus.Backend.Common.Command
 module WebHandler =
 
     let handleCreateProblemAsync (userId: Guid) 
-                                 (getBodyAsync: Async<CreateProblem>)
-                                 (publishCreateProblemAsync: AuthenticatedCommand -> Async<unit>) =
+                                (getBodyAsync: Async<CreateProblem>)
+                                (publishCreateProblemAsync: AuthenticatedCommand -> Async<unit>) =
         asyncResult {
             return! getBodyAsync
                     |> AsyncResult.ofAsync

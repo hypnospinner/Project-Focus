@@ -16,12 +16,10 @@ let ``Unit: Api problem creation works normally`` () =
         }
 
     let mutable publishAddNewProblemAsyncCalls = 0
-    let publishAddNewProblemAsync command =
+    let publishAddNewProblemAsync _ =
         async {
             publishAddNewProblemAsyncCalls <- publishAddNewProblemAsyncCalls + 1
         }
-
-    let k = AsyncResult.retn "s"
 
     let userId = Guid.NewGuid()
     async {
