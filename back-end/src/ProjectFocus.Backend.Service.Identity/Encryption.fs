@@ -19,6 +19,6 @@ module Encryption =
         RandomNumberGenerator.Create().GetBytes(bytes)
         bytes
 
-    let getPasswordHash derivedCount (parameters: EncryptionParams) =
+    let getHash derivedCount (parameters: EncryptionParams) =
         let pbkdf2 = new Rfc2898DeriveBytes(parameters.ClearText, parameters.Salt, derivedCount)
         parameters.Salt.Length |> pbkdf2.GetBytes

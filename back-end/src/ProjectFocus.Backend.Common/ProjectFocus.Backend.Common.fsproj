@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Result.fs" />
+    <Compile Include="WebApp.fs" />
     <Compile Include="Command.fs" />
     <Compile Include="Event.fs" />
     <Compile Include="Auth.fs" />
@@ -17,12 +19,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Giraffe" Version="3.4.0" />
+    <PackageReference Include="Giraffe" Version="3.5.1" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.0" />
-    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.3.0" />
-    <PackageReference Include="MongoDB.Driver" Version="2.7.2" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.4.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.7.3" />
     <PackageReference Include="RawRabbit" Version="2.0.0-rc5" />
     <PackageReference Include="RawRabbit.DependencyInjection.ServiceCollection" Version="2.0.0-rc5" />
     <PackageReference Include="RawRabbit.Operations.Publish" Version="2.0.0-rc5" />
@@ -30,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Update="FSharp.Core" Version="4.5.4" />
+    <PackageReference Update="FSharp.Core" Version="4.6.0" />
   </ItemGroup>
 
 </Project>

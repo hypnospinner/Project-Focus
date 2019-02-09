@@ -11,7 +11,7 @@ module WebApp =
                 (choose [
                     POST >=> choose [
                         route "/login" >=> WebHandler.handleLogin
-                        route "/try" >=> Auth.authorize >=> text "Success!"
                     ]
+                    GET >=> route "/try" >=> Auth.authorize >=> text "Success!"
                 ])
             setStatusCode 404 >=> text "Not Found" ]
