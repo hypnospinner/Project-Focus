@@ -10,7 +10,7 @@ namespace ProjectFocus.Integration
 {
     public class CompositionRoot
     {
-        public IMainViewModel Compose(NavigationPage navigation)
+        public void RunApplication(Application app)
         {
             var builder = new ContainerBuilder();
 
@@ -27,7 +27,7 @@ namespace ProjectFocus.Integration
                    .AsImplementedInterfaces()
                    .PropertiesAutowired();
 
-            var serviceAssembly = typeof(NavigationService).Assembly;
+            var serviceAssembly = typeof(ProblemService).Assembly;
 
             builder.RegisterAssemblyTypes(serviceAssembly)
                    .Where(t => t.Name.EndsWith("Service", StringComparison.InvariantCultureIgnoreCase))
@@ -35,8 +35,7 @@ namespace ProjectFocus.Integration
                    .PropertiesAutowired()
                    .SingleInstance();
 
-            builder.RegisterInstance(navigation)
-                   .As<NavigationPage>();
+            builder.RegisterType<Notification>().AsImplementedInterfaces();
 
             var container = builder.Build();
 
@@ -51,7 +50,9 @@ namespace ProjectFocus.Integration
                 localeManager.SetLocale(cultureInfo);
             }
 
-            return container.Resolve<IMainViewModel>();
+            var mainViewModel = container.Resolve<IMainViewModel>();
+            var navigationPage = new NavigationPage(new MainPage() { BindingContext = mainViewModel });
+            app.MainPage = navigationPage;
         }
     }
 }
