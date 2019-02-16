@@ -1,14 +1,9 @@
-﻿using System.Windows.Input;
+﻿using System.Collections.Generic;
 
 namespace ProjectFocus.Interface
 {
     public interface IMainViewModel
     {
-        // [Design][ToDo] A simple command now at groundwork stage
-        // -> an observable collection of features
-        // in real implementation
-        ICommand ProblemCommand { get; }
-
-        INotification ProceedToCreateProblem { get; }
+        IEnumerable<IViewModelFeature> Features { get; }
     }
 }

@@ -1,12 +1,10 @@
-﻿using System.Windows.Input;
-using ProjectFocus.Interface;
+﻿using ProjectFocus.Interface;
+using System.Collections.Generic;
 
 namespace ProjectFocus.ViewModel.Mock
 {
     public class MainViewModel : IMainViewModel
     {
-        public ICommand ProblemCommand { get; }
-
-        public INotification ProceedToCreateProblem { get; }
+        IEnumerable<IViewModelFeature> IMainViewModel.Features => new[] { new NewProblemFeature() };
     }
 }
