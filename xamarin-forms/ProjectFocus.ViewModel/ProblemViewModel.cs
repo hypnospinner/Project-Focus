@@ -1,65 +1,26 @@
 ﻿using ProjectFocus.Interface;
-using System.Windows.Input;
+using System.Collections.Generic;
+using System.Linq;
 using Xamarin.Forms;
 
 namespace ProjectFocus.ViewModel
 {
-
     public class ProblemViewModel : ViewModelBase, IProblemViewModel
     {
-        private string _name;
-        private string _isProblemCreated;   // simple vizualization for the result of problem creation        
+        public IFeatureProvider FeatureProvider { get; set; }
+        public IUserService UserService { get; set; }
 
-        private ICommand _createProblemCommand;
-        public ICommand CreateProblemCommand
+        private IEnumerable<IViewModelFeature> features;
+        public IEnumerable<IViewModelFeature> Features
         {
             get
             {
-                if (_createProblemCommand == null)
-                {
-                    _createProblemCommand = new Command(
-                        _ => 
-                        {
-                            if (!string.IsNullOrWhiteSpace(_name)) {
-                                // creating and saving problem
-                                // setting fields to defaults
-                                Name = "";
-
-                                IsProblemCreated = "Created successfully";
-                            }
-                            else
-                                IsProblemCreated = "Failure";
-                        });
-
-                    return _createProblemCommand;
-                }
-                else return _createProblemCommand;
-            }            
-        }
-
-        public string Name { get
-            {
-                return _name;
+                if (features == null)
+                    features = FeatureProvider.GetEnabledFeatures(FeatureScope.ProblemCreation,
+                                          UserService.GetEnabledFeatureKeys(FeatureScope.ProblemCreation))
+                              .Select(getFeature => getFeature());
+                return features;
             }
-            set
-            {
-                _name = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public string IsProblemCreated
-        {
-            get
-            {
-                return _isProblemCreated;
-            }
-            set
-            {
-                _isProblemCreated = value;
-                NotifyPropertyChanged();
-            }
-           
         }
     }
 }
