@@ -4,21 +4,13 @@
              x:Class="ProjectFocus.View.ProblemPage"
              xmlns:local="clr-namespace:ProjectFocus.View"
              xmlns:design="clr-namespace:ProjectFocus.ViewModel.Mock;assembly=ProjectFocus.ViewModel.Mock"
+             xmlns:ai="clr-namespace:AiForms.Layouts;assembly=AiForms.Layouts"
              Title="Problem">
-    <ContentPage.Behaviors>
-        <local:DesignBindingBehavior ObjectType="{x:Type design:ProblemViewModel}"/>
-    </ContentPage.Behaviors>
-    <ContentPage.Content>
-        <StackLayout>
-            <Entry Text="{Binding Name}"
-                   VerticalOptions="CenterAndExpand" 
-                   HorizontalOptions="CenterAndExpand" />
-            <Label Text="{Binding IsProblemCreated}"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="CenterAndExpand"/>
-            <Button Text="Create Problem"
-                    Command="{Binding CreateProblemCommand}"
-                    HorizontalOptions="CenterAndExpand"/>
-        </StackLayout>
-    </ContentPage.Content>
+    <ScrollView VerticalOptions="Center">
+        <ai:RepeatableStack ItemsSource="{Binding Features}">
+            <ai:RepeatableStack.ItemTemplate>
+                <local:FeatureTemplateSelector/>
+            </ai:RepeatableStack.ItemTemplate>
+        </ai:RepeatableStack>
+    </ScrollView>
 </ContentPage>
