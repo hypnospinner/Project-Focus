@@ -1,36 +1,45 @@
+using System;
+using System.Linq;
+
 using Moq;
-using ProjectFocus.Interface;
 using Xunit;
+
+using ProjectFocus.Interface;
 
 namespace ProjectFocus.ViewModel.Test
 {
     public class MainViewModelTests
     {
         [Fact]
-        public void NavigationTest()
+        public void FeaturesLoadingTest()
         {
-            var mockProblemViewModel = new Mock<IProblemViewModel>();
-            var mockNavigationService = new Mock<INavigationService>();
             var sut = new MainViewModel();
-            // Property injection
-            sut.NavigationService = mockNavigationService.Object;
-            sut.GetProblemViewModel = () => mockProblemViewModel.Object;
 
-            // Start presentation
-            sut.StartPresentation();
+            var mockUserService = new Mock<IUserService>();
+            var mockFeatureProvider = new Mock<IFeatureProvider>();
+            var stubFeature = new Mock<IViewModelFeature>().Object;
+            var mockFeatures = new Func<IViewModelFeature>[] { () => stubFeature };
+            var stubFeatureKeys = new[] { "key1", "key2", "key3" };
 
-            // Verify MainPage navigation with MainViewModel on creation
-            mockNavigationService.Verify(x => x.Navigate(
-                It.Is<PageKey>(k => k == PageKey.Main),
-                It.Is<object>(vm => vm == sut)), Times.Exactly(1));
+            mockUserService.Setup(x => x.GetEnabledFeatureKeys(It.IsAny<FeatureScope>())).Returns(stubFeatureKeys);
+            mockFeatureProvider.Setup(x => x.GetEnabledFeatures(It.IsAny<FeatureScope>(), It.IsAny<string[]>())).Returns(mockFeatures);
 
-            // Problem command called from MainPage
-            sut.ProblemCommand.Execute(null);
+            sut.UserService = mockUserService.Object;
+            sut.FeatureProvider = mockFeatureProvider.Object;
 
-            // Verify ProblemPage navigation on command with the proper IProblemViewModel
-            mockNavigationService.Verify(x => x.Navigate(
-                It.Is<PageKey>(k => k == PageKey.Problem),
-                It.Is<object>(vm => vm == mockProblemViewModel.Object)), Times.Exactly(1));
+            var result = sut.Features.ToArray();
+
+            Assert.Single(result);
+            Assert.Equal(stubFeature, result[0]);
+
+            mockUserService.Verify(
+                x => x.GetEnabledFeatureKeys(
+                    It.Is<FeatureScope>(y => y == FeatureScope.MainSelection)),
+                Times.Once);
+
+            mockFeatureProvider.Verify(x => x.GetEnabledFeatures(
+                It.Is<FeatureScope>(y => y == FeatureScope.MainSelection),
+                It.Is<string[]>(y => y == stubFeatureKeys)), Times.Once);
         }
     }
 }

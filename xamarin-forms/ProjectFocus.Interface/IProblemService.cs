@@ -1,9 +1,12 @@
-﻿using ProjectFocus.Model;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
 
 namespace ProjectFocus.Interface
 {
     public interface IProblemService
     {
-        void AddNewProblem(ProblemModel problem);
+
     }
 }

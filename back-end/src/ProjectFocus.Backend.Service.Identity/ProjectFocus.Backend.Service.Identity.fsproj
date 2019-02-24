@@ -1,21 +1,33 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Controllers/ValuesController.fs" />
+    <Compile Include="Data.fs" />
+    <Compile Include="Encryption.fs" />
+    <Compile Include="Logic.fs" />
+    <Compile Include="User.fs" />
+    <Compile Include="BusHandler.fs" />
+    <Compile Include="Bus.fs" />
+    <Compile Include="WebHandler.fs" />
+    <Compile Include="WebApp.fs" />
     <Compile Include="Startup.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Giraffe" Version="3.5.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ProjectFocus.Backend.Common\ProjectFocus.Backend.Common.fsproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="4.6.0" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+
 using Xamarin.Forms;
 
 namespace ProjectFocus.View
@@ -9,38 +8,25 @@ namespace ProjectFocus.View
     /// A design-time-only behavior that binds its
     /// associated ContentPage to an instance the given type.
     /// </summary>
-    public class DesignBindingBehavior : Behavior<ContentPage>
+    public class DesignBindingBehavior : BehaviorBase<ContentPage>
     {
         public static readonly BindableProperty ObjectTypeProperty =
             BindableProperty.CreateAttached("ObjectType", typeof(Type), typeof(DesignBindingBehavior), null, propertyChanged: OnObjectTypeChanged);
 
-        public static Type GetObjectType(BindableObject view)
+        public Type ObjectType
         {
-            return (Type)view.GetValue(ObjectTypeProperty);
+            get { return (Type)GetValue(ObjectTypeProperty); }
+            set { SetValue(ObjectTypeProperty, value); }
         }
-
-        public static void SetObjectType(BindableObject view, Type value)
-        {
-            view.SetValue(ObjectTypeProperty, value);
-        }
-
-        public ContentPage AssociatedObject { get; private set; }
 
         protected override void OnAttachedTo(ContentPage bindable)
         {
             base.OnAttachedTo(bindable);
-            AssociatedObject = bindable;
 
             if (DesignMode.IsDesignModeEnabled)
             {
-                InstantiateAndBind(GetObjectType(this), bindable);
+                InstantiateAndBind(ObjectType, bindable);
             }
-        }
-
-        protected override void OnDetachingFrom(ContentPage bindable)
-        {
-            base.OnDetachingFrom(bindable);
-            AssociatedObject = null;
         }
 
         private static void OnObjectTypeChanged(BindableObject bindable, object oldValue, object newValue)
@@ -56,7 +42,7 @@ namespace ProjectFocus.View
         private static void InstantiateAndBind(Type contextType, ContentPage bindable)
         {
             if (bindable == null || contextType == null) return;
-
+           
             var contextInstance = Activator.CreateInstance(contextType);
             bindable.BindingContext = contextInstance;
         }

@@ -4,39 +4,51 @@ using ProjectFocus.Service;
 using ProjectFocus.View;
 using ProjectFocus.ViewModel;
 using System;
+using System.Linq;
 using Xamarin.Forms;
 
 namespace ProjectFocus.Integration
 {
     public class CompositionRoot
     {
-        public IMainViewModel Compose(NavigationPage navigation)
+        public void RunApplication(Application app)
         {
             var builder = new ContainerBuilder();
 
             var viewAssembly = typeof(MainPage).Assembly;
 
-            builder.RegisterAssemblyTypes(viewAssembly)
-                   .Where(t => t.Name.EndsWith("Page", StringComparison.InvariantCultureIgnoreCase))
-                   .Keyed<ContentPage>(t => t.Name);
-
             var viewModelAssembly = typeof(MainViewModel).Assembly;
+
+            builder.RegisterType<Notification>()
+                   .As<INotification>();
+
+            builder.RegisterType<CommandFactory>()
+                   .As<ICommandFactory>()
+                   .SingleInstance();
 
             builder.RegisterAssemblyTypes(viewModelAssembly)
                    .Where(t => t.Name.EndsWith("ViewModel", StringComparison.InvariantCultureIgnoreCase))
                    .AsImplementedInterfaces()
                    .PropertiesAutowired();
 
-            var serviceAssembly = typeof(NavigationService).Assembly;
+            builder.RegisterAssemblyTypes(viewModelAssembly)
+                   .Where(t => t.Name.EndsWith("Feature", StringComparison.InvariantCultureIgnoreCase))
+                   .WithMetadataFrom<FeatureMetadataAttribute>()
+                   .As<IViewModelFeature>()
+                   .PropertiesAutowired();
+
+            builder.RegisterType<FeatureProvider>()
+                   .As<IFeatureProvider>()
+                   .SingleInstance()
+                   .PropertiesAutowired();
+
+            var serviceAssembly = typeof(ProblemService).Assembly;
 
             builder.RegisterAssemblyTypes(serviceAssembly)
                    .Where(t => t.Name.EndsWith("Service", StringComparison.InvariantCultureIgnoreCase))
                    .AsImplementedInterfaces()
                    .PropertiesAutowired()
                    .SingleInstance();
-
-            builder.RegisterInstance(navigation)
-                   .As<NavigationPage>();
 
             var container = builder.Build();
 
@@ -51,7 +63,10 @@ namespace ProjectFocus.Integration
                 localeManager.SetLocale(cultureInfo);
             }
 
-            return container.Resolve<IMainViewModel>();
+            var mainViewModel = container.Resolve<IMainViewModel>();
+
+            var navigationPage = new NavigationPage(new MainPage() { BindingContext = mainViewModel });
+            app.MainPage = navigationPage;
         }
     }
 }

@@ -17,6 +17,7 @@ module Command =
             Password: string;
         }
 
+    [<CLIMutable>]
     type CreateProblem =
         {
             Name: string;
