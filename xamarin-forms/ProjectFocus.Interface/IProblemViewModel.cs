@@ -2,6 +2,6 @@
 {
     public interface IProblemViewModel
     {
-        string Text { get; set; }
+        string Name { get; set; }
     }
 }

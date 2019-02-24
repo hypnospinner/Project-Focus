@@ -12,6 +12,7 @@ namespace ProjectFocus.ViewModel
 
         private IEnumerable<IViewModelFeature> features;
         public IEnumerable<IViewModelFeature> Features
+
         {
             get
             {
