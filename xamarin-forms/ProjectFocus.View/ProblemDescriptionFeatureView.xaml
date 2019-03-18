@@ -4,10 +4,10 @@
              x:Class="ProjectFocus.View.ProblemDescriptionFeatureView">
   <ContentView.Content>
       <StackLayout>
-            <Label>Feature Header</Label>
-            <Entry BindingContext="{Binding ProblemHeader}"/>
-            <Label>Feature Description</Label>
-            <Entry BindingContext="{Binding ProblemDescription}"/>
+            <Label HorizontalOptions="Center">Feature Header</Label>
+            <Entry BindingContext="{Binding ProblemHeader}" HorizontalOptions="Center" WidthRequest="200"/>
+            <Label HorizontalOptions="Center">Feature Description</Label>
+            <Entry BindingContext="{Binding ProblemDescription}" HorizontalOptions="Center" WidthRequest="200"/>
         </StackLayout>
   </ContentView.Content>
 </ContentView>
