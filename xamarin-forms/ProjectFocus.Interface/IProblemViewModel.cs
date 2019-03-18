@@ -1,7 +1,9 @@
-﻿namespace ProjectFocus.Interface
+﻿using System.Collections.Generic;
+
+namespace ProjectFocus.Interface
 {
     public interface IProblemViewModel
     {
-        string Name { get; set; }
+        IEnumerable<IViewModelFeature> Features { get; }
     }
 }

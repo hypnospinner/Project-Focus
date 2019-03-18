@@ -1,9 +1,10 @@
-﻿using ProjectFocus.Interface;
+﻿using System.Collections.Generic;
+using ProjectFocus.Interface;
 
 namespace ProjectFocus.ViewModel.Mock
 {
     public class ProblemViewModel : IProblemViewModel
     {
-        public string Name { get; set; } = "Test Problem View Model";
+        public IEnumerable<IViewModelFeature> Features => throw new System.NotImplementedException();
     }
 }
