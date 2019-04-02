@@ -5,13 +5,19 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BD082A75-E193-4DA6-8DF6-9C5E15D4A534}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ProjectFocus.Backend.Api", "src\ProjectFocus.Backend.Api\ProjectFocus.Backend.Api.fsproj", "{99E222F7-8C71-4499-A8C3-583D205D3383}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "ProjectFocus.Backend.Api", "src\ProjectFocus.Backend.Api\ProjectFocus.Backend.Api.fsproj", "{99E222F7-8C71-4499-A8C3-583D205D3383}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ProjectFocus.Backend.Service.Identity", "src\ProjectFocus.Backend.Service.Identity\ProjectFocus.Backend.Service.Identity.fsproj", "{439137AA-D90A-4343-9375-882030526FA5}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "ProjectFocus.Backend.Service.Identity", "src\ProjectFocus.Backend.Service.Identity\ProjectFocus.Backend.Service.Identity.fsproj", "{439137AA-D90A-4343-9375-882030526FA5}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ProjectFocus.Backend.Service.Problem", "src\ProjectFocus.Backend.Service.Problem\ProjectFocus.Backend.Service.Problem.fsproj", "{584239CE-EDCB-4A4A-BAB0-1DFEE807129F}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "ProjectFocus.Backend.Service.Problem", "src\ProjectFocus.Backend.Service.Problem\ProjectFocus.Backend.Service.Problem.fsproj", "{584239CE-EDCB-4A4A-BAB0-1DFEE807129F}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ProjectFocus.Backend.Common", "src\ProjectFocus.Backend.Common\ProjectFocus.Backend.Common.fsproj", "{6F08A281-5357-4C02-BAD6-4383CC8F8546}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "ProjectFocus.Backend.Common", "src\ProjectFocus.Backend.Common\ProjectFocus.Backend.Common.fsproj", "{6F08A281-5357-4C02-BAD6-4383CC8F8546}"
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "ProjectFocus.Backend.Test", "tests\ProjectFocus.Backend.Test\ProjectFocus.Backend.Test.fsproj", "{F79990E7-C44F-4C1B-818C-FC42B274CA83}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{61584531-83E4-4AB9-B3D2-238099B992B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectFocus.Backend.Test.Integration", "tests\ProjectFocus.Backend.Test.Integration\ProjectFocus.Backend.Test.Integration.csproj", "{FBB42601-E5D4-4467-A795-150B9D15ADB2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +27,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{99E222F7-8C71-4499-A8C3-583D205D3383}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -74,11 +77,43 @@ Global
 		{6F08A281-5357-4C02-BAD6-4383CC8F8546}.Release|x64.Build.0 = Release|Any CPU
 		{6F08A281-5357-4C02-BAD6-4383CC8F8546}.Release|x86.ActiveCfg = Release|Any CPU
 		{6F08A281-5357-4C02-BAD6-4383CC8F8546}.Release|x86.Build.0 = Release|Any CPU
+		{F79990E7-C44F-4C1B-818C-FC42B274CA83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F79990E7-C44F-4C1B-818C-FC42B274CA83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F79990E7-C44F-4C1B-818C-FC42B274CA83}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F79990E7-C44F-4C1B-818C-FC42B274CA83}.Debug|x64.Build.0 = Debug|Any CPU
+		{F79990E7-C44F-4C1B-818C-FC42B274CA83}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F79990E7-C44F-4C1B-818C-FC42B274CA83}.Debug|x86.Build.0 = Debug|Any CPU
+		{F79990E7-C44F-4C1B-818C-FC42B274CA83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F79990E7-C44F-4C1B-818C-FC42B274CA83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F79990E7-C44F-4C1B-818C-FC42B274CA83}.Release|x64.ActiveCfg = Release|Any CPU
+		{F79990E7-C44F-4C1B-818C-FC42B274CA83}.Release|x64.Build.0 = Release|Any CPU
+		{F79990E7-C44F-4C1B-818C-FC42B274CA83}.Release|x86.ActiveCfg = Release|Any CPU
+		{F79990E7-C44F-4C1B-818C-FC42B274CA83}.Release|x86.Build.0 = Release|Any CPU
+		{FBB42601-E5D4-4467-A795-150B9D15ADB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBB42601-E5D4-4467-A795-150B9D15ADB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBB42601-E5D4-4467-A795-150B9D15ADB2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FBB42601-E5D4-4467-A795-150B9D15ADB2}.Debug|x64.Build.0 = Debug|Any CPU
+		{FBB42601-E5D4-4467-A795-150B9D15ADB2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FBB42601-E5D4-4467-A795-150B9D15ADB2}.Debug|x86.Build.0 = Debug|Any CPU
+		{FBB42601-E5D4-4467-A795-150B9D15ADB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBB42601-E5D4-4467-A795-150B9D15ADB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBB42601-E5D4-4467-A795-150B9D15ADB2}.Release|x64.ActiveCfg = Release|Any CPU
+		{FBB42601-E5D4-4467-A795-150B9D15ADB2}.Release|x64.Build.0 = Release|Any CPU
+		{FBB42601-E5D4-4467-A795-150B9D15ADB2}.Release|x86.ActiveCfg = Release|Any CPU
+		{FBB42601-E5D4-4467-A795-150B9D15ADB2}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{99E222F7-8C71-4499-A8C3-583D205D3383} = {BD082A75-E193-4DA6-8DF6-9C5E15D4A534}
 		{439137AA-D90A-4343-9375-882030526FA5} = {BD082A75-E193-4DA6-8DF6-9C5E15D4A534}
 		{584239CE-EDCB-4A4A-BAB0-1DFEE807129F} = {BD082A75-E193-4DA6-8DF6-9C5E15D4A534}
 		{6F08A281-5357-4C02-BAD6-4383CC8F8546} = {BD082A75-E193-4DA6-8DF6-9C5E15D4A534}
+		{F79990E7-C44F-4C1B-818C-FC42B274CA83} = {61584531-83E4-4AB9-B3D2-238099B992B9}
+		{FBB42601-E5D4-4467-A795-150B9D15ADB2} = {61584531-83E4-4AB9-B3D2-238099B992B9}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {009293F1-ED5F-406A-A21A-19D394C71B3A}
 	EndGlobalSection
 EndGlobal

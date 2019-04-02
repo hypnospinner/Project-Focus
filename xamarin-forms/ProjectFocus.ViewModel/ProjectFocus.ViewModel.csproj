@@ -1,11 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="3.6.0.264807" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ProjectFocus.Interface\ProjectFocus.Interface.csproj" />
+    <ProjectReference Include="..\ProjectFocus.Model\ProjectFocus.Model.csproj" />
   </ItemGroup>
 
 </Project>

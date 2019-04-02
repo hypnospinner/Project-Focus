@@ -1,20 +1,25 @@
 ﻿using ProjectFocus.Interface;
+using System.Collections.Generic;
+using System.Linq;
+using Xamarin.Forms;
 
 namespace ProjectFocus.ViewModel
 {
     public class ProblemViewModel : ViewModelBase, IProblemViewModel
     {
-        private string _text = "Happy binding from problem!";
-        public string Text
+        public IFeatureProvider FeatureProvider { get; set; }
+        public IUserService UserService { get; set; }
+
+        private IEnumerable<IViewModelFeature> features;
+        public IEnumerable<IViewModelFeature> Features
         {
             get
             {
-                return _text;
-            }
-            set
-            {
-                _text = value;
-                NotifyPropertyChanged();
+                if (features == null)
+                    features = FeatureProvider.GetEnabledFeatures(FeatureScope.ProblemCreation,
+                                          UserService.GetEnabledFeatureKeys(FeatureScope.ProblemCreation))
+                              .Select(getFeature => getFeature());
+                return features;
             }
         }
 
