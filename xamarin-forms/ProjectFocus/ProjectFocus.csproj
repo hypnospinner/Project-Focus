@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ProjectFocus.Data\ProjectFocus.Data.csproj" />
     <ProjectReference Include="..\ProjectFocus.Integration\ProjectFocus.Integration.csproj" />
   </ItemGroup>
 </Project>

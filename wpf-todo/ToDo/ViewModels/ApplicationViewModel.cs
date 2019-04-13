@@ -2,7 +2,6 @@
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 using ToDo.Models;
-
 using Newtonsoft.Json;
 using System.Windows.Input;
 using System.Collections;

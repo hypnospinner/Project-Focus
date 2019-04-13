@@ -7,10 +7,12 @@ namespace ProjectFocus.ViewModel
 {
     public class MainViewModel : ViewModelBase, IMainViewModel
     {
+        // fields
+        private IEnumerable<IViewModelFeature> features;
+
+        // properties
         public IFeatureProvider FeatureProvider {get;set;}
         public IUserService UserService { get; set; }
-
-        private IEnumerable<IViewModelFeature> features;
         public IEnumerable<IViewModelFeature> Features
         {
             get

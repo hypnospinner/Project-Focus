@@ -1,7 +1,5 @@
 ﻿using System;
-
 using Xamarin.Forms;
-
 using ProjectFocus.Interface;
 
 namespace ProjectFocus.View

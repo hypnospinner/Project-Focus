@@ -4,6 +4,7 @@
     {
         MainSelection,
         ProblemCreation,
-        ProblemEditing
+        ProblemEditing,
+        ProblemList
     }
 }

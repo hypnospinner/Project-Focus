@@ -6,26 +6,12 @@ namespace ProjectFocus.Model
 {
     public class ProblemModel : INotifyPropertyChanged
     {
-        private DateTime _createdAt;
         private string _name;
+        private string _description;
 
         public ProblemModel(string name)
         {
-            _createdAt = DateTime.Now;
             _name = name;
-        }
-
-        public DateTime CreatedAt
-        {
-            get => _createdAt;
-            set
-            {
-                if (_createdAt != null)
-                {
-                    _createdAt = value;
-                    NotifyPropertyChaged();
-                }
-            }
         }
 
         public string Name
@@ -34,6 +20,16 @@ namespace ProjectFocus.Model
             set 
             {
                 _name = value;
+                NotifyPropertyChaged();
+            }
+        }
+
+        public string Description
+        {
+            get => _description;
+            set
+            {
+                _description = value;
                 NotifyPropertyChaged();
             }
         }
