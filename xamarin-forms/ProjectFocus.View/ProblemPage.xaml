@@ -6,6 +6,19 @@
              xmlns:design="clr-namespace:ProjectFocus.ViewModel.Mock;assembly=ProjectFocus.ViewModel.Mock"
              xmlns:ai="clr-namespace:AiForms.Layouts;assembly=AiForms.Layouts"
              Title="Problem">
+    <ContentPage.Behaviors>
+        <local:DesignBindingBehavior ObjectType="{x:Type design:ProblemViewModel}"/>
+    </ContentPage.Behaviors>
+    <!--<ContentPage.Content>
+        <StackLayout>
+            <Label Text="{Binding Text}"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <local:GradientPlanePicker HeightRequest="400"
+                                     XSelection="{Binding Importance, Mode=TwoWay}"
+                                     YSelection="{Binding Urgency, Mode=TwoWay}"/>
+        </StackLayout>
+    </ContentPage.Content>-->
     <ScrollView VerticalOptions="Center">
         <ai:RepeatableStack ItemsSource="{Binding Features}">
             <ai:RepeatableStack.ItemTemplate>
