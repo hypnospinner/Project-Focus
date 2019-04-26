@@ -10,7 +10,7 @@ namespace ProjectFocus.Integration
 {
     public class FeatureProvider : IFeatureProvider
     {
-        public Lazy<IEnumerable<Meta<Func<IViewModelFeature>, FeatureMetadataAttribute>>> TaggedFeatureSources { get; set; }
+        public Lazy<IEnumerable<Meta<Func<IFeatureViewModelBase>, FeatureMetadataAttribute>>> TaggedFeatureSources { get; set; }
 
         public FeatureProvider()
         {
@@ -24,13 +24,13 @@ namespace ProjectFocus.Integration
                             .ToArray();
         }
 
-        public Func<IViewModelFeature>[] GetEnabledFeatures(FeatureScope scope, string[] enabledFeatureKeys)
+        public Func<IFeatureViewModelBase>[] GetEnabledFeatures(FeatureScope scope, string[] enabledFeatureKeys)
         {
             return TaggedFeatureSources.Value.SelectMany(feature =>
                                 enabledFeatureKeys.Contains(feature.Metadata.Name)
                                 && feature.Metadata.SupportedScopes.Contains(scope)
                                 ? new[] { feature.Value }
-                                : Enumerable.Empty<Func<IViewModelFeature>>())
+                                : Enumerable.Empty<Func<IFeatureViewModelBase>>())
                             .ToArray();
         }
     }

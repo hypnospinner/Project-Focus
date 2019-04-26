@@ -8,12 +8,11 @@ namespace ProjectFocus.ViewModel
     public class MainViewModel : ViewModelBase, IMainViewModel
     {
         // fields
-        private IEnumerable<IViewModelFeature> features;
-
+        private IEnumerable<IFeatureViewModelBase> features;
         // properties
         public IFeatureProvider FeatureProvider {get;set;}
         public IUserService UserService { get; set; }
-        public IEnumerable<IViewModelFeature> Features
+        public IEnumerable<IFeatureViewModelBase> Features
         {
             get
             {

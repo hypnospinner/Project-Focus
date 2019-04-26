@@ -4,7 +4,7 @@ namespace ProjectFocus.Interface
 {
     public interface IFeatureProvider
     {
-        Func<IViewModelFeature>[] GetEnabledFeatures(FeatureScope scope, string[] enabledFeatureKeys);
+        Func<IFeatureViewModelBase>[] GetEnabledFeatures(FeatureScope scope, string[] enabledFeatureKeys);
 
         string[] GetAllFeatureKeys(FeatureScope scope);
     }

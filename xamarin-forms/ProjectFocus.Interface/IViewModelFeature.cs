@@ -4,7 +4,8 @@ using System.Text;
 
 namespace ProjectFocus.Interface
 {
-    public interface IViewModelFeature
+    public interface IFeatureViewModelBase
     {
+        void SetNotificationChanel(INotification notification);
     }
 }

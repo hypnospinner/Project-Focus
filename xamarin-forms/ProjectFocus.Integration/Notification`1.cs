@@ -4,10 +4,9 @@ using System.Collections.Generic;
 
 namespace ProjectFocus.Integration
 {
-    public class Notification : INotification
+    public class Notification<T> : INotification<T>
     {
-
-        public void Publish(object parameter)
+        public void Publish(T parameter)
         {
             foreach (var handler in subscriptions.Values)
             {
@@ -15,7 +14,7 @@ namespace ProjectFocus.Integration
             }
         }
 
-        public Guid Subscribe(Action<object> handler)
+        public Guid Subscribe(Action<T> handler)
         {
             var subscriptionId = Guid.NewGuid();
             subscriptions[subscriptionId] = handler;
@@ -27,7 +26,7 @@ namespace ProjectFocus.Integration
             subscriptions.Remove(subscriptionId);
         }
 
-        private Dictionary<Guid, Action<object>> subscriptions
-            = new Dictionary<Guid, Action<object>>();
+        private Dictionary<Guid, Action<T>> subscriptions
+            = new Dictionary<Guid, Action<T>>();
     }
 }

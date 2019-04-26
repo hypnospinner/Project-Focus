@@ -4,41 +4,15 @@ using System.Runtime.CompilerServices;
 
 namespace ProjectFocus.Model
 {
-    public class ProblemModel : INotifyPropertyChanged
+    public class ProblemModel 
     {
         private string _name;
         private string _description;
-
-        public ProblemModel(string name)
+        public ProblemModel(string name = "New Problem")
         {
             _name = name;
         }
-
-        public string Name
-        {
-            get => _name;
-            set 
-            {
-                _name = value;
-                NotifyPropertyChaged();
-            }
-        }
-
-        public string Description
-        {
-            get => _description;
-            set
-            {
-                _description = value;
-                NotifyPropertyChaged();
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChaged([CallerMemberName] String propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        public string Name { get; set; }
+        public string Description{ get; set; }
     }
 }

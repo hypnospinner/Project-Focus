@@ -13,4 +13,8 @@
     <ProjectReference Include="..\ProjectFocus.Model\ProjectFocus.Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Event\" />
+  </ItemGroup>
+
 </Project>

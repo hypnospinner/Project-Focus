@@ -12,7 +12,7 @@ namespace ProjectFocus.ViewModel.Test
         [Fact]
         public void NewProblemFeatureMetadataTest()
         {
-            var attributes = typeof(NewProblemFeature).GetCustomAttributes(typeof(FeatureMetadataAttribute), true);
+            var attributes = typeof(GoToProblemFeature).GetCustomAttributes(typeof(FeatureMetadataAttribute), true);
             Assert.Single(attributes);
             var attribute = (FeatureMetadataAttribute)attributes[0];
             Assert.Equal("NewProblemFeature", attribute.Name);
@@ -37,7 +37,7 @@ namespace ProjectFocus.ViewModel.Test
                     })
                 .Returns(mockCommand.Object);
 
-            var sut = new NewProblemFeature();
+            var sut = new GoToProblemFeature();
 
             sut.CommandFactory = mockCommandFactory.Object;
             sut.GetProblemViewModel = () => stubProblemViewModel;

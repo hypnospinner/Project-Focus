@@ -3,7 +3,10 @@ using System.Windows.Input;
 
 namespace ProjectFocus.Interface
 {
-    public interface INewProblemFeature
+    /// <summary>
+    /// 
+    /// </summary>
+    public interface IGoToProblemFeature
     {
         INotification ProceedToCreateProblem { get; }
 

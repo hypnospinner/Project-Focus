@@ -4,12 +4,11 @@ using ProjectFocus.Interface;
 
 namespace ProjectFocus.ViewModel
 {
-    [FeatureMetadata(nameof(NewProblemFeature), FeatureScope.MainSelection)]
-    public class NewProblemFeature : ViewModelBase, IViewModelFeature, INewProblemFeature
+    [FeatureMetadata(nameof(GoToProblemFeature), FeatureScope.MainSelection)]
+    public class GoToProblemFeature : FeatureViewModelBase, IGoToProblemFeature
     {
         public ICommandFactory CommandFactory { get; set; }
         public Func<IProblemViewModel> GetProblemViewModel { get; set; }
-
         public INotification ProceedToCreateProblem { get; set; }
 
         private ICommand _problemCommand;
@@ -22,7 +21,6 @@ namespace ProjectFocus.ViewModel
                     _problemCommand = CommandFactory.Create(
                         () => ProceedToCreateProblem.Publish(GetProblemViewModel()),
                         () => true);
-
                 }
                 return _problemCommand;
             }

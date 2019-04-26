@@ -7,18 +7,25 @@ namespace ProjectFocus.ViewModel
 {
     public class ProblemViewModel : ViewModelBase, IProblemViewModel
     {
+        public INotification Notifcation { get; set; }
         public IFeatureProvider FeatureProvider { get; set; }
         public IUserService UserService { get; set; }
 
-        private IEnumerable<IViewModelFeature> features;
-        public IEnumerable<IViewModelFeature> Features
+        private IEnumerable<IFeatureViewModelBase> features;
+        public IEnumerable<IFeatureViewModelBase> Features
         {
             get
             {
                 if (features == null)
                     features = FeatureProvider.GetEnabledFeatures(FeatureScope.ProblemCreation,
                                           UserService.GetEnabledFeatureKeys(FeatureScope.ProblemCreation))
-                              .Select(getFeature => getFeature());
+                              .Select(getFeature => 
+                              {
+                                  var feature = getFeature();
+                                  feature.SetNotificationChanel(Notifcation);
+                                  return feature;
+                              });
+
                 return features;
             }
         }

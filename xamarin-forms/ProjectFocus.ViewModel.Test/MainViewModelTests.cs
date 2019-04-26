@@ -17,8 +17,8 @@ namespace ProjectFocus.ViewModel.Test
 
             var mockUserService = new Mock<IUserService>();
             var mockFeatureProvider = new Mock<IFeatureProvider>();
-            var stubFeature = new Mock<IViewModelFeature>().Object;
-            var mockFeatures = new Func<IViewModelFeature>[] { () => stubFeature };
+            var stubFeature = new Mock<IFeatureViewModelBase>().Object;
+            var mockFeatures = new Func<IFeatureViewModelBase>[] { () => stubFeature };
             var stubFeatureKeys = new[] { "key1", "key2", "key3" };
 
             mockUserService.Setup(x => x.GetEnabledFeatureKeys(It.IsAny<FeatureScope>())).Returns(stubFeatureKeys);

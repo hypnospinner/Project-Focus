@@ -5,6 +5,6 @@ namespace ProjectFocus.ViewModel.Mock
 {
     public class MainViewModel : IMainViewModel
     {
-        IEnumerable<IViewModelFeature> IMainViewModel.Features => new[] { new NewProblemFeature() };
+        IEnumerable<IFeatureViewModelBase> IMainViewModel.Features => new[] { new NewProblemFeature() };
     }
 }

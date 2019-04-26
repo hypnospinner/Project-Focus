@@ -4,6 +4,6 @@ namespace ProjectFocus.Interface
 {
     public interface IProblemViewModel
     {
-        IEnumerable<IViewModelFeature> Features { get; }
+        IEnumerable<IFeatureViewModelBase> Features { get; }
     }
 }
