@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace ProjectFocus.View
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class NewProblemFeatureView : ContentView
+	public partial class GoToProblemFeatureView : ContentView
 	{
-		public NewProblemFeatureView ()
+		public GoToProblemFeatureView()
 		{
 			InitializeComponent ();
 		}
