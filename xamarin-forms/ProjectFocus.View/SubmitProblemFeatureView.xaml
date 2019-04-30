@@ -4,7 +4,7 @@
              x:Class="ProjectFocus.View.SubmitProblemFeatureView">
     <ContentView.Content>
         <StackLayout>
-            <Button Text="Problem" 
+            <Button Text="Submit Problem" 
                    Command="{Binding SubmitCommand}"
                    HorizontalOptions="Center"
                    VerticalOptions="CenterAndExpand"/>

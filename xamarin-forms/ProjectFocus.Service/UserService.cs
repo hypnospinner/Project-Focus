@@ -10,7 +10,9 @@ namespace ProjectFocus.Service
         //from user configuration.
         public string[] GetEnabledFeatureKeys(FeatureScope featureScope)
             => featureScope == FeatureScope.MainSelection ? 
-            new[] { "GoToProblemFeature" } : new[] { "ProblemDescriptionFeature", "SubmitProblemFeature" };
+            new[] { "GoToProblemFeature" } : new[] {
+                "SubmitProblemFeature" ,
+                "ProblemDescriptionFeature" };
 
         public void SaveEnabledFeatures(FeatureScope featureScope, string[] userSelection)
         {
