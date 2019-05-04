@@ -5,11 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.8.1" />
-    <PackageReference Include="Xamarin.Forms" Version="3.4.0.1009999" />
+    <PackageReference Include="Autofac" Version="4.9.2" />
+    <PackageReference Include="Xamarin.Forms" Version="3.6.0.344457" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ProjectFocus.Data\ProjectFocus.Data.csproj" />
     <ProjectReference Include="..\ProjectFocus.Interface\ProjectFocus.Interface.csproj" />
     <ProjectReference Include="..\ProjectFocus.Service\ProjectFocus.Service.csproj" />
     <ProjectReference Include="..\ProjectFocus.ViewModel\ProjectFocus.ViewModel.csproj" />

@@ -1,34 +1,71 @@
 ﻿using ProjectFocus.Interface;
+using ProjectFocus.Model;
+using ProjectFocus.ViewModel.Event;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Input;
 
 namespace ProjectFocus.ViewModel
 {
     [FeatureMetadata(nameof(SubmitProblemFeature),FeatureScope.ProblemCreation)]
     public class SubmitProblemFeature : FeatureViewModelBase, ISubmitProblemFeature
-    { 
-        private ICommand _submitCommand;
+    {
+        private bool _changed;
+        private Problem _problemModel;
+        private IRelayCommand _submitCommand;
         public ICommandFactory CommandFactory { get; set; }
-        public ICommand SubmitCommand
+        public IProblemService ProblemService { get; set; }
+        public IUserService UserService { get; set; }
+
+        private bool Changed
+        {
+            get => _changed;
+            set
+            {
+                _changed = value;
+                _submitCommand.NotifyCanExecuteChanged();
+            }
+        }
+
+        public IRelayCommand SubmitCommand
         {
             get
             {
                 if(_submitCommand == null)
                 {
-                    // mock for _submit command
                     _submitCommand = CommandFactory.Create(
-                        () => Console.WriteLine("Submit Command"),
-                        () => true);
+                        () =>
+                        {
+                            ProblemService.CreateProblem(_problemModel, UserService.GetCurrentUser());
+                            Changed = false;
+                        },
+                        () => Changed);
                 }
 
                 return _submitCommand;
             }
         }
+
         protected override void SubscribeToNotifications()
         {
-            base.SubscribeToNotifications();
+            Notification.Subscribe(featureEvent =>
+            {
+                switch (featureEvent)
+                {
+                    case ProblemRead read:
+                        _problemModel = read.ProblemModel;
+                        Changed = false;
+                        break;
+                    case ProblemHeaderChanged headerChanged:
+                        if (_problemModel == null) _problemModel = new Problem { Name = headerChanged.NewHeader };
+                        else _problemModel.Name = headerChanged.NewHeader;
+                        Changed = true;
+                        break;
+                    case ProblemDescriptionChanged descriptionChanged:
+                        if (_problemModel == null) _problemModel = new Problem { Description = descriptionChanged.NewDescription };
+                        else _problemModel.Description = descriptionChanged.NewDescription;
+                        Changed = true;
+                        break;
+                }
+            });
         }
     }
 }

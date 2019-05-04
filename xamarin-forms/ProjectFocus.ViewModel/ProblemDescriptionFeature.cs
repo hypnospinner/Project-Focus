@@ -1,17 +1,14 @@
 ﻿using ProjectFocus.Interface;
+using ProjectFocus.ViewModel.Event;
 
 namespace ProjectFocus.ViewModel
 {
     [FeatureMetadata(nameof(ProblemDescriptionFeature), FeatureScope.ProblemCreation)]
     class ProblemDescriptionFeature : FeatureViewModelBase, IProblemDescriptionFeature
     {
-        public ProblemDescriptionFeature(INotification notification)
-        {
-
-        }
-
         private string problemHeader;
         private string problemDescription;
+
         public string ProblemHeader
         {
             get => problemHeader;
@@ -19,6 +16,7 @@ namespace ProjectFocus.ViewModel
             {
                 problemHeader = value;
                 NotifyPropertyChanged();
+                Notification.Publish(new ProblemHeaderChanged { NewHeader = value });
             }
         }
         public string ProblemDescription
@@ -28,6 +26,7 @@ namespace ProjectFocus.ViewModel
             {
                 problemDescription = value;
                 NotifyPropertyChanged();
+                Notification.Publish(new ProblemDescriptionChanged { NewDescription = value });
             }
         }
     }

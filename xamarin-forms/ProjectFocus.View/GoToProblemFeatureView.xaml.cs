@@ -14,7 +14,7 @@ namespace ProjectFocus.View
 	{
 		public GoToProblemFeatureView()
 		{
-			InitializeComponent ();
+            InitializeComponent();
 		}
 	}
 }

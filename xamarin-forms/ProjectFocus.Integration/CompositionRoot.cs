@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using ProjectFocus.Data;
 using ProjectFocus.Interface;
 using ProjectFocus.Service;
 using ProjectFocus.View;
@@ -19,12 +20,19 @@ namespace ProjectFocus.Integration
 
             var viewModelAssembly = typeof(MainViewModel).Assembly;
 
+            var dataAssembly = typeof(ProblemStorage).Assembly;
+
             builder.RegisterType<Notification>()
                    .As<INotification>();
 
             builder.RegisterType<CommandFactory>()
                    .As<ICommandFactory>()
                    .SingleInstance();
+
+            builder.RegisterAssemblyTypes(dataAssembly)
+                    .Where(t => t.Name.EndsWith("Storage", StringComparison.InvariantCultureIgnoreCase))
+                    .AsImplementedInterfaces()
+                    .PropertiesAutowired();
 
             builder.RegisterAssemblyTypes(viewModelAssembly)
                    .Where(t => t.Name.EndsWith("ViewModel", StringComparison.InvariantCultureIgnoreCase))

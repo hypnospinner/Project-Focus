@@ -10,17 +10,17 @@ namespace ProjectFocus.Data
     /// </summary>
     public class DataManager
     {
-        public IEnumerable<ProblemModel> GetMockProblemList()
+        public IEnumerable<Problem> GetMockProblemList()
         {
             string jsonString;
             using (var reader = new StreamReader("mock.json"))
                 jsonString = reader.ReadToEnd();
 
-            var problemList = JsonConvert.DeserializeObject<ProblemModel[]>(jsonString);
+            var problemList = JsonConvert.DeserializeObject<Problem[]>(jsonString);
             return problemList;
         }
 
-        public void SaveMockProblemList(IEnumerable<ProblemModel> problemList)
+        public void SaveMockProblemList(IEnumerable<Problem> problemList)
         {
             var jsonString = JsonConvert.SerializeObject(problemList);
             File.WriteAllText("mock.json", jsonString);

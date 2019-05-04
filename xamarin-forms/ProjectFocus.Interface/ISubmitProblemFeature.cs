@@ -3,10 +3,10 @@
 namespace ProjectFocus.Interface
 {
     /// <summary>
-    /// 
+    /// Presentation logic for submitting a problem
     /// </summary>
     public interface ISubmitProblemFeature
     {
-        ICommand SubmitCommand { get; }
+        IRelayCommand SubmitCommand { get; }
     }
 }

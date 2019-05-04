@@ -6,11 +6,11 @@
         <StackLayout HorizontalOptions="Center">
             <StackLayout Orientation="Horizontal">
                 <Label HorizontalOptions="Center">Title</Label>
-                <Entry BindingContext="{Binding ProblemHeader}" HorizontalOptions="Center" WidthRequest="200"/>
+                <Entry Text="{Binding ProblemHeader, Mode=TwoWay}" HorizontalOptions="Center" WidthRequest="200"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal">
                 <Label HorizontalOptions="Center">Description</Label>
-                <Entry BindingContext="{Binding ProblemDescription}" HorizontalOptions="Center" WidthRequest="200"/>
+                <Entry Text="{Binding ProblemDescription, Mode=TwoWay}" HorizontalOptions="Center" WidthRequest="200"/>
             </StackLayout>
         </StackLayout>
   </ContentView.Content>

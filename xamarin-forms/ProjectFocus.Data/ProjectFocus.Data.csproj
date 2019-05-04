@@ -5,10 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ProjectFocus.Interface\ProjectFocus.Interface.csproj" />
     <ProjectReference Include="..\ProjectFocus.Model\ProjectFocus.Model.csproj" />
   </ItemGroup>
 
